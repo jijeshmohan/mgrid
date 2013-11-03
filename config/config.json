@@ -1,0 +1,17 @@
+{
+    "development": {
+        "database": "webgrid_development",
+        "dialect": "sqlite",
+        "storage": "db/database_dev.sqlite"
+    },
+    "test": {
+        "database": "database_test",
+        "dialect": "sqlite",
+        "storage": "db/database_test.sqlite"
+    },
+    "production": {
+        "database": "webgrid",
+        "dialect": "sqlite",
+        "storage": "db/database.sqlite"
+    }
+}
