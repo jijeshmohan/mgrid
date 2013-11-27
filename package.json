@@ -12,6 +12,7 @@
     "express": "3.4.4",
     "ejs": "*",
     "express-partials": "*",
-    "sequelize": "*"
+    "sequelize": "*",
+    "sqlite3": "*"
   }
 }

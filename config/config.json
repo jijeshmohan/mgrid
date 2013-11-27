@@ -1,6 +1,6 @@
 {
     "development": {
-        "database": "webgrid_development",
+        "database": "database_dev",
         "dialect": "sqlite",
         "storage": "db/database_dev.sqlite"
     },
