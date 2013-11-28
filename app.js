@@ -11,6 +11,19 @@ var path = require('path');
 
 var app = express();
 
+
+var Sequelize = require("sequelize");
+var env = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/config/config')[env];
+
+var dbpath = __dirname + "/" + config.storage;
+
+var sequelize = new Sequelize(config.database,'' , '', {
+   dialect: 'sqlite',
+   omitNull: true,
+   storage:  dbpath
+});
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
