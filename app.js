@@ -11,8 +11,10 @@ var path = require('path');
 
 var app = express();
 
+GLOBAL.app = app
 
 var Sequelize = require("sequelize");
+
 var env = process.env.NODE_ENV || 'development';
 var config = require(__dirname + '/config/config')[env];
 
@@ -43,6 +45,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+//Models
+
+GLOBAL.models = require('./model')(sequelize)
 
 // Routes
 require('./routes')(app);
