@@ -1,0 +1,12 @@
+<h1>Devices</h1>
+<table class="table">
+<% devices.forEach(function(device){ %>
+	<tr>
+	  <td><%= device.name %></td>
+	  <td><%= device.deviceType %></td>
+	  <td><%= device.platform %></td>
+	  <td><%= device.osVersion %></td>
+	  <td><%= device.status %></td>
+	</tr>
+	<% }); %>
+</table>
