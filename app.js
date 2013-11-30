@@ -41,6 +41,17 @@ app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Handle 404
+app.use(function(req, res) {
+ res.status(400);
+ res.render('404.ejs', {title: '404: File Not Found'});
+});
+
+app.use(function(error, req, res, next) {
+ res.status(500);
+ res.render('500.ejs', {title:'500: Internal Server Error', error: error});
+});
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -52,6 +63,7 @@ GLOBAL.models = require('./model')(sequelize)
 
 // Routes
 require('./routes')(app);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
