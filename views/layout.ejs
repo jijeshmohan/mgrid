@@ -4,36 +4,47 @@
     <title>Mobile Grid</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
+   body {
+      min-height: 2000px;
+    }
+
+    .navbar-static-top {
+      margin-bottom: 19px;
+    }
     </style>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   </head>
   <body>
-     <div class="navbar navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    <!-- Static navbar -->
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Mobile Grid</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li><a href="/">Dashboard</a></li>
-              <li ><a href="/runs">Execution Log</a></li>
-              <li><a href="/devices">Devices</a></li>
-              <li><a href="/settings">Settings</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
-     <div class="container">
+          <a class="navbar-brand" href="/"><i class="fa fa-building-o fa-1x"></i> Mobile Grid</a>
+         </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/"> <i class="fa fa-tachometer fa-fw"></i> Dashboard</a></li>
+            <li ><a href="/runs"><i class="fa fa-list fa-fw"></i> Execution Log</a></li>
+            <li><a href="/devices"><i class="fa fa-mobile fa-fw"></i> Devices</a></li>
+            <li><a href="/settings"><i class="fa fa-cogs fa-fw"></i> Settings</a></li>
+          </ul>
+
+        </div><!--/.nav-collapse -->
+
+       </div><!--/.conatiner -->
+    </div><!--/.navbar -->
+    <div class="container">
           <%- body %>
-     </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
   </body>
 </html>
