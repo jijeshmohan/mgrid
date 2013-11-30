@@ -14,5 +14,9 @@
     "express-partials": "*",
     "sequelize": "*",
     "sqlite3": "*"
-  }
+  },
+  "devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-contrib-jshint": "~0.6.3"
+    }
 }
