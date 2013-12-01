@@ -9,9 +9,9 @@ module.exports = function(grunt) {
   });
 
   // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-jshint'); 
 
-  // Default task(s).
+  // task(s).
   grunt.registerTask('default', ['jshint']);
 
 };

@@ -58,13 +58,17 @@ if ('development' == app.get('env')) {
 }
 
 //Models
-
 GLOBAL.models = require('./model')(sequelize)
 
 // Routes
 require('./routes')(app);
 
+var server = http.createServer(app);
 
-http.createServer(app).listen(app.get('port'), function(){
+GLOBAL.sio = require('socket.io').listen(server);
+
+require('./socket')
+
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
