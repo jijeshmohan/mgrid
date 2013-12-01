@@ -1,7 +1,9 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
+ body {
+     min-height: 2000px;
+ }
+ .navbar-static-top {
+     margin-bottom: 5px;
+ }
+ .green {
+     color: green;
+ }

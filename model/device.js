@@ -20,6 +20,15 @@ module.exports = function(sequelize, DataTypes) {
       osVersion: {
          type:   DataTypes.STRING
       }
+  },{
+    classMethods: {
+      
+    },
+    instanceMethods: {
+      isAvailable: function () {
+        return this.status === 'available'
+      }
+    }
   });
 };
 
