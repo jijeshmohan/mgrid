@@ -27,6 +27,16 @@ module.exports = function(sequelize, DataTypes) {
     instanceMethods: {
       isAvailable: function () {
         return this.status === 'available'
+      },
+      updateStatus: function (active) {
+        if(active){
+          this.status="available";
+        }else{
+          this.status="disconnected";
+        }
+        this.save(['status']).success(function() { 
+          
+        });
       }
     }
   });
