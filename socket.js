@@ -12,7 +12,10 @@ sio.sockets.on('connection', function(socket) {
 	       			 return;
 	       		}
 	       		deviceName = device.name;
-	       		device.updateStatus(true);
+	       		device.updateStatus(true).error(function(){
+	       			deviceName=""
+	       			socket.disconnect();
+	       		});
 	       	});
 	  });
 
@@ -23,8 +26,13 @@ sio.sockets.on('connection', function(socket) {
        	.success(function(device) {
        		if (deviceName !== ""){
 	       		deviceName = device.name;
-	       		device.updateStatus(false);
+	       		device.updateStatus(false).error(function(){
+	       			console.log("Unable to update the device status")
+	       		});
        		}
        	});
   });
 });
+
+
+

@@ -34,9 +34,7 @@ module.exports = function(sequelize, DataTypes) {
         }else{
           this.status="disconnected";
         }
-        this.save(['status']).success(function() { 
-          
-        });
+        return this.save(['status'])
       }
     }
   });
