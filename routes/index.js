@@ -7,4 +7,6 @@ module.exports = function(app) {
     //device
     var devices = require('./devices');
     app.get('/devices', devices.list);
+    app.get('/devices/new', devices.newDevice);
+    app.post('/devices', devices.create);
 };
