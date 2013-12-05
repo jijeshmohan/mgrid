@@ -1,13 +1,13 @@
 exports.list = function(req, res){
    models.Device.findAll().success(function(devices) {
-     res.render('devices/index',{devices: devices});
+     res.render('devices/index',{devices: devices,menu: 'devices'});
   }).error(function(error) {
     res.send(error);
   });
 };
 
 exports.newDevice = function (req,res) {
-    res.render('devices/new',{msg: req.session.messages});
+    res.render('devices/new',{msg: req.session.messages, menu: 'devices'});
     req.session.messages=[];
 };
 

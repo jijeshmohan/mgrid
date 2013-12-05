@@ -23,10 +23,11 @@
          </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/"> <i class="fa fa-tachometer fa-fw"></i> Dashboard</a></li>
-            <li ><a href="/runs"><i class="fa fa-list fa-fw"></i> Execution Log</a></li>
-            <li><a href="/devices"><i class="fa fa-mobile fa-fw"></i> Devices</a></li>
-            <li><a href="/settings"><i class="fa fa-cogs fa-fw"></i> Settings</a></li>
+          <% if (typeof menu == 'undefined') { menu = 'dashboard'; }%>
+            <li <% if( menu =='dashboard') {%>class="active"<%}%>><a href="/"> <i class="fa fa-tachometer fa-fw"></i> Dashboard</a></li>
+            <li <% if (menu =='log') {%>class="active"<%}%>><a href="/runs"><i class="fa fa-list fa-fw"></i> Execution Log</a></li>
+            <li <% if (menu =='devices') {%>class="active"<%}%>><a href="/devices"><i class="fa fa-mobile fa-fw"></i> Devices</a></li>
+            <li <% if (menu =='settings') {%>class="active"<%}%>><a href="/settings"><i class="fa fa-cogs fa-fw"></i> Settings</a></li>
           </ul>
 
         </div><!--/.nav-collapse -->
