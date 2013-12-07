@@ -14,7 +14,8 @@
     "express-partials": "*",
     "sequelize": "*",
     "socket.io": "*",
-    "sqlite3": "*"
+    "sqlite3": "*",
+    "express-form":"0.10.x"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

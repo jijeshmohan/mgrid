@@ -8,5 +8,5 @@ module.exports = function(app) {
     var devices = require('./devices');
     app.get('/devices', devices.list);
     app.get('/devices/new', devices.newDevice);
-    app.post('/devices', devices.create);
+    app.post('/devices',devices.form,devices.create);
 };
