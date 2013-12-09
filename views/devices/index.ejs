@@ -20,9 +20,24 @@
 	  <td><%=: device.deviceType | capitalize %></td>
 	  <td><%=: device.platform %></td>
 	  <td><%= device.osVersion %></td>
-	  <td <% if (device.isAvailable()) { %> class="green" <% } %>><i class="fa fa-mobile"></i> <%=: device.status | capitalize %></td>
+	  <td id="device_<%= device.id %>" <% if (device.isAvailable()) { %> class="green" <% } %>><i class="fa fa-mobile"></i> <%=: device.status | capitalize %></td>
 	</tr>
 	<% }); %>
 </tbody>
 </table>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io.connect('http://localhost:3000');
+socket.on('connect', function(){
+  socket.on('device_status', function(data){
+  	var td = $('#device_'+data.id).html("<i class='fa fa-mobile'></i> "+ data.status);
+	if(data.status ==="Available"){
+		$(td).addClass('green');
+	}else{
+		$(td).removeClass('green');
+	}
+  });
+  socket.on('disconnect', function(){});
+});
+</script>

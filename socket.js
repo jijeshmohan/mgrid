@@ -15,6 +15,8 @@ sio.sockets.on('connection', function(socket) {
 	       		device.updateStatus(true).error(function(){
 	       			deviceName=""
 	       			socket.disconnect();
+	       		}).success(function(){
+	       			socket.broadcast.emit('device_status', {id: device.id, status: 'Available'})
 	       		});
 	       	});
 	  });
@@ -28,6 +30,8 @@ sio.sockets.on('connection', function(socket) {
 	       		deviceName = device.name;
 	       		device.updateStatus(false).error(function(){
 	       			console.log("Unable to update the device status")
+	       		}).success(function () {
+	       			socket.broadcast.emit('device_status', {id: device.id, status: 'Disconnected'})
 	       		});
        		}
        	});
