@@ -9,4 +9,8 @@ module.exports = function(app) {
     app.get('/devices', devices.list);
     app.get('/devices/new', devices.newDevice);
     app.post('/devices',devices.form,devices.create);
+
+    //device
+    var runs = require('./runs');
+    app.get('/runs', runs.list);
 };

@@ -1,0 +1,24 @@
+<h3>Devices</h3>
+<div class="row">
+<span class="pull-right"><a href="/runs/new"><i class="fa fa-plus-square-o"></i> New Run</a></span>
+</div>
+<div class="table-responsive">
+<table class="table table-condensed">
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Status</th>
+	</tr>
+</thead>
+<tbody>
+<% runs.forEach(function(run){ %>
+	<tr>
+	  <td><%=: run.name | capitalize %></td>
+	  <td><%=: run.runType %></td>
+	  <td><%=: run.status %></td>
+	</tr>
+	<% }); %>
+</tbody>
+</table>
+</div>
