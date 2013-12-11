@@ -13,4 +13,5 @@ module.exports = function(app) {
     //device
     var runs = require('./runs');
     app.get('/runs', runs.list);
+    app.get('/runs/new', runs.newRun);
 };

@@ -22,7 +22,9 @@ module.exports = function(sequelize, DataTypes) {
       }
   },{
     classMethods: {
-      
+      availableDevices: function () {
+        return this.findAll({ where: {status: 'available'} })
+      }
     },
     instanceMethods: {
       isAvailable: function () {

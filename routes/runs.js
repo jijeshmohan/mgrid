@@ -11,3 +11,23 @@ exports.list = function(req, res) {
         res.send(error);
     });
 };
+
+
+exports.newRun = function(req, res) {
+  models.Device.availableDevices().success(function(devices) { 
+    if (devices === null){
+      devices=[];
+    }
+	    res.render('runs/new', {
+	        msg: req.session.messages,
+	        menu: 'runs',
+	        devices: devices
+	    });
+	    req.session.messages = [];
+      }).error(function(error) {
+        res.send(error);
+     });
+};
+
+
+
