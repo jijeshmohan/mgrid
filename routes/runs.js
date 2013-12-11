@@ -30,4 +30,29 @@ exports.newRun = function(req, res) {
 };
 
 
+exports.create = function(req, res) {
+    if (!req.form.isValid) {
+        req.session.messages = req.form.errors;
+        res.redirect('/runs/new');
+    } else {
+          models.Run.create({
+              name: req.body.name,
+              status: 'Not Started',
+              runType: req.body.runType,
+              comments: req.body.comments
+          }).success(function() {
+                res.redirect('/runs');
+            }).error(function(errors) {
+                req.session.messages = ["Error while creating new run", errors.toString()];
+                res.redirect('/runs/new');
+            });
+    }
+};
 
+
+exports.form = form(
+    field("name").trim().required(),
+    field("runType").trim().required(),
+    field("comments").trim().required(),
+    field("devices").trim().required()
+);

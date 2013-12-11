@@ -14,4 +14,5 @@ module.exports = function(app) {
     var runs = require('./runs');
     app.get('/runs', runs.list);
     app.get('/runs/new', runs.newRun);
+    app.post('/runs',runs.form,runs.create);
 };
