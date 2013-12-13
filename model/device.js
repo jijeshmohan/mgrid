@@ -23,12 +23,12 @@ module.exports = function(sequelize, DataTypes) {
   },{
     classMethods: {
       availableDevices: function () {
-        return this.findAll({ where: {status: 'available'} })
+        return this.findAll({ where: {status: 'available'} });
       }
     },
     instanceMethods: {
       isAvailable: function () {
-        return this.status === 'available'
+        return this.status === 'available';
       },
       updateStatus: function (active) {
         if(active){
@@ -36,7 +36,7 @@ module.exports = function(sequelize, DataTypes) {
         }else{
           this.status="disconnected";
         }
-        return this.save(['status'])
+        return this.save(['status']);
       }
     }
   });
