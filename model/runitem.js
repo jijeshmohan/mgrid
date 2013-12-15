@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     status: {
        type:   DataTypes.ENUM,
-       values: ['Passed', 'Failed', 'Error', 'Running']
+       values: ['Passed', 'Failed', 'Error', 'Running','Pending'],
+       defaultValue: 'Pending'
     }
   });
 };
