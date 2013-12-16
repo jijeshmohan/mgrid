@@ -1,5 +1,7 @@
 var form = require('express-form'),
-field = form.field;
+      field = form.field;
+
+var Sequelize = require("sequelize");
 
 exports.list = function(req, res) {
   models.Run.findAll({order: 'createdAt DESC'}).success(function(runs) {
@@ -35,19 +37,39 @@ exports.create = function(req, res) {
     req.session.messages = req.form.errors;
     res.redirect('/runs/new');
   } else {
-    models.Run.create({
+    createNewRun(req,res);
+  }
+};
+
+function createNewRun (req,res) {
+
+  var chainer=new Sequelize.Utils.QueryChainer;
+
+  chainer.add(models.Run.create({
       name: req.body.name,
       status: 'Not Started',
       runType: req.body.runType,
       comments: req.body.comments
-    }).success(function() {
-      res.redirect('/runs');
-    }).error(function(errors) {
-      req.session.messages = ["Error while creating new run", errors.toString()];
-      res.redirect('/runs/new');
-    });
+    }));
+
+  for (var i = req.body.devices.length - 1; i >= 0; i--) {
+    chainer.add(models.RunItem.create({deviceId: parseInt(req.body.devices[i])}));
   }
-};
+
+   chainer.run().success(function(results){
+    run = results[0];
+    results.shift()
+    run.setRunitems(results).success(function(){
+        res.redirect('/runs');
+      }).error(function  (errors) {
+         req.session.messages = ["Error while creating new run", errors.toString()];
+        res.redirect('/runs/new');
+      });
+   }).error(function(errors) {
+        req.session.messages = ["Error while creating new run", errors.toString()];
+        res.redirect('/runs/new');
+    });
+}
 
 
 exports.form = form(
