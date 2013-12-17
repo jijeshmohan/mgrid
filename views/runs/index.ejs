@@ -9,6 +9,7 @@
 		<th>Name</th>
 		<th>Type</th>
 		<th>Status</th>
+		<th>Devices Count</th>
 		<th>Time</th>
 	</tr>
 </thead>
@@ -18,6 +19,7 @@
 	  <td><%=: run.name | capitalize %></td>
 	  <td><%=: run.runType %></td>
 	  <td><%=: run.status %></td>
+	  <td><%=: run.runitems.length %></td>
 	  <td><%=: run.createdAt %></td>
 	</tr>
 	<% }); %>
