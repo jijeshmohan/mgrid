@@ -16,7 +16,7 @@
 <tbody>
 <% runs.forEach(function(run){ %>
 	<tr>
-	  <td><%=: run.name | capitalize %></td>
+	  <td><a href='/runs/<%= run.id %>'><%=: run.name | capitalize %></a></td>
 	  <td><%=: run.runType %></td>
 	  <td><%=: run.status %></td>
 	  <td><%=: run.runitems.length %></td>

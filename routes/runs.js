@@ -14,6 +14,17 @@ exports.list = function(req, res) {
   });
 };
 
+exports.show = function (req,res) {
+
+  models.Run.find(req.params["id"]).success(function (run) {
+    if(!run){
+      res.send(404,"Unable to find run");
+    }
+    res.render('runs/show',{menu: 'runs',run: run})
+  }).error(function(error){
+      res.send(error);
+  });
+};
 
 exports.newRun = function(req, res) {
   models.Device.availableDevices().success(function(devices) { 
