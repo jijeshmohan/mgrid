@@ -1,4 +1,43 @@
 <h3>Run</h3>
+<hr/>
 <div class="row">
-<h4><%= run.name %></h4>
+	<div class="col-md-3">
+		<span>Run Name</span>
+	</div>
+	<div class="col-md-4">
+		: <span><strong><%= run.name %></strong></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<span>Run Type</span>
+	</div>
+	<div class="col-md-4">
+		: <strong><%= run.runType %></strong>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<span>Comments</span>
+	</div>
+	<div class="col-md-4">
+		: <strong><%= run.comments %></strong>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-3">
+		<span>Date</span>
+	</div>
+	<div class="col-md-4">
+		: <strong><%= run.createdAt %></strong>
+	</div>
+</div>
+<div class="row">
+	<h5>Devices</h5>
+	<dl class="dl-horizontal">
+		<% runItems.forEach(function(item){ %>
+			<dt><%= item.device.name %></dt>
+	  		<dd><%= item.status %></dd>
+		<% }) %>
+	</dl>
 </div>

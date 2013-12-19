@@ -20,7 +20,10 @@ exports.show = function (req,res) {
     if(!run){
       res.send(404,"Unable to find run");
     }
-    res.render('runs/show',{menu: 'runs',run: run})
+    models.RunItem.findAll({where:{runId: run.id},include:[models.Device]}).success(function (runItems) {
+       res.render('runs/show',{menu: 'runs',run: run,runItems: runItems})
+    });
+   
   }).error(function(error){
       res.send(error);
   });

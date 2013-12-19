@@ -8,5 +8,11 @@ module.exports = function(sequelize, DataTypes) {
        values: ['Passed', 'Failed', 'Error', 'Running','Pending'],
        defaultValue: 'Pending'
     }
+  },{
+    classMethods: {
+      
+    },
+    instanceMethods: {
+    }
   });
 };
