@@ -13,7 +13,7 @@
 		<span>Run Type</span>
 	</div>
 	<div class="col-md-4">
-		: <strong><%= run.runType %></strong>
+		: <strong><%= run.runTypeText() %></strong>
 	</div>
 </div>
 <div class="row">
@@ -33,11 +33,14 @@
 	</div>
 </div>
 <div class="row">
-	<h5>Devices</h5>
+<div class="col-md-12">
+	<h4>Devices</h4>
+	<hr/>
 	<dl class="dl-horizontal">
 		<% runItems.forEach(function(item){ %>
 			<dt><%= item.device.name %></dt>
 	  		<dd><%= item.status %></dd>
 		<% }) %>
 	</dl>
+</div>
 </div>

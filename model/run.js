@@ -21,7 +21,13 @@ module.exports = function(sequelize, DataTypes) {
       
     },
     instanceMethods: {
-      
+      runTypeText: function () {
+        if(this.runType === "All"){
+          return "All Tests in all devices"
+        }else{
+          return "Distribute tests in all devices"
+        }
+      }
     }
   });
 };
