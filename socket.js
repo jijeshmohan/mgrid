@@ -16,11 +16,18 @@ sio.sockets.on('connection', function(socket) {
 	       			deviceName=""
 	       			socket.disconnect();
 	       		}).success(function(){
+	       			socket.set("deviceId",device.id);
 	       			socket.broadcast.emit('device_status', {id: device.id, status: 'Available'})
 	       		});
 	       	});
 	  });
 
+  socket.on('status',function(data){
+  	models.RunItem.find(data.runitem.id).success(function(item){
+  		item.status=data.status;
+  		item.save();
+  	})
+  });
      // Disconnect
   socket.on('disconnect', function (data) {
   	 console.log("disconnect" + deviceName)

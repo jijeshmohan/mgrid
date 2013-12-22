@@ -75,6 +75,7 @@ function createNewRun (req,res) {
     results.shift()
     run.setRunitems(results).success(function(){
         res.redirect('/runs');
+        sendRunRequests(results);
       }).error(function  (errors) {
          req.session.messages = ["Error while creating new run", errors.toString()];
         res.redirect('/runs/new');
@@ -85,6 +86,17 @@ function createNewRun (req,res) {
     });
 }
 
+function sendRunRequests  (runItems) {
+  runItems.forEach(function(item){
+     sio.sockets.clients().forEach(function (socket) {
+      socket.get("deviceId", function (err, id) {
+        if(id === item.deviceId){
+           socket.emit("execute",{runitem: item});
+        }
+      });
+     });
+   });
+}
 
 exports.form = form(
   field("name").trim().required(),
