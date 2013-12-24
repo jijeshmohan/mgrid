@@ -15,7 +15,8 @@
     "sequelize": "*",
     "socket.io": "*",
     "sqlite3": "*",
-    "express-form":"0.10.x"
+    "express-form":"0.10.x",
+    "underscore":"*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

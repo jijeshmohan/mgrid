@@ -1,3 +1,5 @@
+var _ = require('underscore')._;
+
 sio.configure('production', function() {
     io.set('log level', 1);
 });
@@ -28,6 +30,27 @@ sio.sockets.on('connection', function(socket) {
   		item.save();
   	})
   });
+
+  socket.on('result',function(data){
+
+	var isPassed = _.every(_.flatten(_.map(_.flatten(_.map(data.result,function(feature){
+	  		return _.where(feature.elements,{"keyword": "Scenario"});
+	  	})), function(scenario){
+			return _.map(scenario.steps,function(s){ return s.result.status});
+		})),function(s){return s === 'passed'});
+
+	models.RunItem.find(data.id).success(function(item){
+  		if(isPassed){
+  			item.status="Passed";
+  		}else{
+  			item.status="Failed";
+  		}
+  		item.comments=data.result;
+  		item.save();
+  	});
+	
+  });
+
      // Disconnect
   socket.on('disconnect', function (data) {
   	 console.log("disconnect" + deviceName)
