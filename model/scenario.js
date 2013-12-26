@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
          type: DataTypes.STRING(2000)
     },
   },{
+      tableName: 'scenarios',
     classMethods: {
       
     },

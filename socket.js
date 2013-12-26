@@ -47,8 +47,25 @@ sio.sockets.on('connection', function(socket) {
   		}
   		item.comments=data.result;
   		item.save();
+  		
   	});
 	
+	_.each(data.result,function(feature){
+		var feature_name = feature.name;
+		_.each(_.where(feature.elements,{"keyword": "Scenario"}),function(scenario){
+			var results = _.flatten(_.map(scenario.steps,function(s){ return s.result.status}));
+			var status="";
+			if(_.every(results,function(s){return s === 'passed'})){
+				status="Passed";
+			}else if(_.every(results,function(s){return s === 'skipped'})){
+				status="Skipped";
+			}else{
+				status="Failed";
+			}
+			models.Scenario.create({name: scenario.name,feature: feature_name,status: status,runitemId: data.id});
+		});
+	});
+
   });
 
      // Disconnect
