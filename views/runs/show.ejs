@@ -32,15 +32,28 @@
 		: <strong><%= run.createdAt %></strong>
 	</div>
 </div>
+<br/>
 <div class="row">
 <div class="col-md-12">
 	<h4>Devices</h4>
 	<hr/>
-	<dl class="dl-horizontal">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Device Name</th>
+				<th>Status</th>
+				<th>Scenario Count</th>
+			</tr>
+		</thead>
+		<tbody>
 		<% runItems.forEach(function(item){ %>
-			<dt><%= item.device.name %></dt>
-	  		<dd><%= item.status %></dd>
+			<tr>
+				<td><%= item.device.name %></td>
+				<td><%= item.status %></td>
+				<td><%= item.scenarios.length %></td>
+			</tr>
 		<% }) %>
-	</dl>
+		</tbody>
+	</table>
 </div>
 </div>

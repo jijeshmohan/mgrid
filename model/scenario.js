@@ -4,9 +4,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    comments: {
-       type: DataTypes.STRING(2000)
-    },
     status: {
        type:   DataTypes.ENUM,
        values: ['Passed', 'Failed', 'Skipped']
