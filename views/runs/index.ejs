@@ -18,7 +18,7 @@
 	<tr>
 	  <td><a href='/runs/<%= run.id %>'><%=: run.name | capitalize %></a></td>
 	  <td><%=: run.runTypeText() %></td>
-	  <td><%=: run.status %></td>
+	  <td><%=: run.dynamicStatus() %></td>
 	  <td><%=: run.runitems.length %></td>
 	  <td><%=: run.createdAt %></td>
 	</tr>

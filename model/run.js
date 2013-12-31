@@ -1,3 +1,5 @@
+var _ = require('underscore')._;
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('run',{
     name: {
@@ -21,6 +23,18 @@ module.exports = function(sequelize, DataTypes) {
       
     },
     instanceMethods: {
+      dynamicStatus: function(){
+        if(_.every(this.runitems, function(s){return s.status === 'Passed'})){ 
+          return 'Passed';
+        }
+        if(_.every(this.runitems, function(s){return s.status === 'Running'})){ 
+          return 'Running';
+        }
+        if(_.some(this.runitems, function(s){return s.status === 'Failed'})){ 
+          return 'Failed';
+        }
+        return this.status;
+      },
       runTypeText: function () {
         if(this.runType === "All"){
           return "All Tests in all devices"
