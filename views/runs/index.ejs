@@ -3,9 +3,10 @@
 <span class="pull-right"><a href="/runs/new"><i class="fa fa-plus-square-o"></i> New Run</a></span>
 </div>
 <div class="table-responsive">
-<table class="table table-condensed">
+<table class="table table-hover">
 <thead>
 	<tr>
+		<th></th>
 		<th>Name</th>
 		<th>Type</th>
 		<th>Status</th>
@@ -15,10 +16,12 @@
 </thead>
 <tbody>
 <% runs.forEach(function(run){ %>
+<% var runStatus = run.dynamicStatus() %>
 	<tr>
+	  <td><i class="fa fa-list"></i></td>
 	  <td><a href='/runs/<%= run.id %>'><%=: run.name | capitalize %></a></td>
 	  <td><%=: run.runTypeText() %></td>
-	  <td><%=: run.dynamicStatus() %></td>
+	  <td><span class="label <%= generateStatusClass(runStatus) %>"><%= runStatus %></span></td>
 	  <td><%=: run.runitems.length %></td>
 	  <td><%=: run.createdAt %></td>
 	</tr>
