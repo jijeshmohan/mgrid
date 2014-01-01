@@ -16,6 +16,7 @@
     "socket.io": "*",
     "sqlite3": "*",
     "express-form":"0.10.x",
+    "moment":"*",
     "underscore":"*"
   },
   "devDependencies": {

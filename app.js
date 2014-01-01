@@ -8,6 +8,7 @@ var routes = require('./routes');
 var partials = require('express-partials');
 var http = require('http');
 var path = require('path');
+var moment = require('moment');
 
 var app = express();
 
@@ -68,6 +69,9 @@ app.locals({
 			return 'label-default';
 			break;
 		}
+	},
+	formatDate: function(datetime){
+		return moment(datetime).fromNow();
 	} 
 });
 

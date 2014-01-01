@@ -52,7 +52,7 @@
 			<tr>
 				<td><%= item.device.name %></td>
 				<td><span class="label <%= generateStatusClass(item.status) %>"><%= item.status %></span></td>
-				<td><%= item.scenarios.length %></td>
+				<td><span class="badge"><%= item.scenarios.length %></span></td>
 				<td><%= JSON.stringify(item.getScenarioStatus()) %></td>
 			</tr>
 		<% }) %>

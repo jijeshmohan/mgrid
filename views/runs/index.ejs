@@ -22,8 +22,8 @@
 	  <td><a href='/runs/<%= run.id %>'><%=: run.name | capitalize %></a></td>
 	  <td><%=: run.runTypeText() %></td>
 	  <td><span class="label <%= generateStatusClass(runStatus) %>"><%= runStatus %></span></td>
-	  <td><%=: run.runitems.length %></td>
-	  <td><%=: run.createdAt %></td>
+	  <td><span class="badge"><%=: run.runitems.length %></span></td>
+	  <td><%=: formatDate(run.createdAt) %></td>
 	</tr>
 	<% }); %>
 </tbody>
