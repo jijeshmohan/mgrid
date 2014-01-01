@@ -43,14 +43,17 @@
 				<th>Device Name</th>
 				<th>Status</th>
 				<th>Scenario Count</th>
+				<th>Comments</th>
 			</tr>
 		</thead>
 		<tbody>
+		
 		<% runItems.forEach(function(item){ %>
 			<tr>
 				<td><%= item.device.name %></td>
-				<td><%= item.status %></td>
+				<td><span class="label <%= generateStatusClass(item.status) %>"><%= item.status %></span></td>
 				<td><%= item.scenarios.length %></td>
+				<td><%= JSON.stringify(item.getScenarioStatus()) %></td>
 			</tr>
 		<% }) %>
 		</tbody>

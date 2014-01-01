@@ -53,6 +53,24 @@ app.use(function(error, req, res, next) {
  res.render('500.ejs', {title:'500: Internal Server Error', error: error});
 });
 
+app.locals({
+	generateStatusClass: function(status){ 
+		switch(status.toLowerCase()){ 
+			case 'failed':
+			return 'label-danger';
+			break; 
+			case 'passed': 
+			return 'label-success';break; 
+			case 'running':
+			return 'label-warning';
+			break;
+			case 'not started':
+			return 'label-default';
+			break;
+		}
+	} 
+});
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());

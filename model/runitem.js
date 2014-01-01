@@ -1,3 +1,5 @@
+var _ = require('underscore')._;
+
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('runitem',{
     comments: {
@@ -13,6 +15,9 @@ module.exports = function(sequelize, DataTypes) {
       
     },
     instanceMethods: {
+      getScenarioStatus: function () {
+       return _.countBy(this.scenarios,function(s){ return s.status})
+      }
     }
   });
 };
