@@ -32,27 +32,15 @@ sio.sockets.on('connection', function(socket) {
   });
 
   socket.on('result',function(data){
-
 	var isPassed = _.every(_.flatten(_.map(_.flatten(_.map(data.result,function(feature){
 	  		return _.where(feature.elements,{"keyword": "Scenario"});
 	  	})), function(scenario){
 			return _.map(scenario.steps,function(s){ return s.result.status});
 		})),function(s){return s === 'passed'});
 
-	models.RunItem.find(data.id).success(function(item){
-  		if(isPassed){
-  			item.status="Passed";
-  		}else{
-  			item.status="Failed";
-  		}
-  		item.comments=data.result;
-  		item.save();
-  		
-  	});
-	
 	_.each(data.result,function(feature){
 		var feature_name = feature.name;
-		_.each(_.where(feature.elements,{"keyword": "Scenario"}),function(scenario){
+		var scenarios= _.map(_.where(feature.elements,{"keyword": "Scenario"}),function(scenario){
 			var results = _.flatten(_.map(scenario.steps,function(s){ return s.result.status}));
 			var status="";
 			if(_.every(results,function(s){return s === 'passed'})){
@@ -62,10 +50,28 @@ sio.sockets.on('connection', function(socket) {
 			}else{
 				status="Failed";
 			}
-			models.Scenario.create({name: scenario.name,feature: feature_name,status: status,runitemId: data.id});
+			return {name: scenario.name,feature: feature_name,status: status,runitemId: data.id}
 		});
+
+		models.Scenario.bulkCreate(scenarios)
+			.success(function(){
+				 console.log("created scenarios");
+			}).error(function(){
+				console.log("error while saving scenarios" );
+			});
 	});
 
+	models.RunItem.find(data.id).success(function(item){
+  		if(isPassed){
+  			item.status="Passed";
+  		}else{
+  			item.status="Failed";
+  		}
+  		item.save().error(function(){
+  			console.log("Error while updating runitem");
+  		});
+  		
+  	});
   });
 
      // Disconnect
