@@ -9,7 +9,7 @@ var partials = require('express-partials');
 var http = require('http');
 var path = require('path');
 var moment = require('moment');
-
+var _ = require('underscore')._;
 var app = express();
 
 GLOBAL.app = app
@@ -64,12 +64,16 @@ app.locals({
 			case 'passed': 
 			return 'label-success';break; 
 			case 'running':
+			case 'skipped':
 			return 'label-warning';
 			break;
 			case 'not started':
 			return 'label-default';
 			break;
 		}
+	},
+	groupScenarios: function(scenarios){
+		return _.groupBy(scenarios,function(s){ return s.feature; });
 	},
 	formatDate: function(datetime){
 		return moment(datetime).fromNow();

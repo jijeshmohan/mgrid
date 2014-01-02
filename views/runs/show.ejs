@@ -29,7 +29,7 @@
 		<span>Date</span>
 	</div>
 	<div class="col-md-4">
-		: <strong><%= run.createdAt %></strong>
+		: <strong><%= formatDate(run.createdAt) %></strong>
 	</div>
 </div>
 <br/>
@@ -37,7 +37,7 @@
 <div class="col-md-12">
 	<h4>Devices</h4>
 	<hr/>
-	<table class="table">
+	<table class="table" id="accordion">
 		<thead>
 			<tr>
 				<th>Device Name</th>
@@ -50,10 +50,30 @@
 		
 		<% runItems.forEach(function(item){ %>
 			<tr>
-				<td><%= item.device.name %></td>
+				<td><a data-toggle="collapse" data-parent="#accordion" href="#item_<%= item.id %>"><%= item.device.name %></a></td>
 				<td><span class="label <%= generateStatusClass(item.status) %>"><%= item.status %></span></td>
 				<td><span class="badge"><%= item.scenarios.length %></span></td>
 				<td><%= JSON.stringify(item.getScenarioStatus()) %></td>
+			</tr>
+			<tr id="item_<%= item.id %>" class="panel-collapse collapse">
+				<td colspan="4">
+					<% var g = groupScenarios(item.scenarios) %>
+					<% for (var i in g) {  %>
+						<div class="panel panel-default">
+						  <div class="panel-heading"><%= i %></div>
+						  <div class="panel-body">
+							<ul class="list-group">
+							<% g[i].forEach(function(row){ %>
+								<li class="list-group-item">
+								<span class="pull-right label <%= generateStatusClass(row.status) %>"><%= row.status %></span>
+								<%= row.name %>
+								</li>
+							<% }) %>
+							</ul>
+						 </div>
+						</div>
+					<% } %>
+				</td>
 			</tr>
 		<% }) %>
 		</tbody>
