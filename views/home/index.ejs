@@ -1,1 +1,37 @@
-<h1>Home</h1>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+<link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+
+<div class="row">
+	<div class="col-md-6">
+	<h4 class="text-center">Last 5 runs</h4>
+	<div id="chartContainer">
+		
+	  <script type="text/javascript">
+	   Morris.Bar({
+	  	element: 'chartContainer',
+		  data: <%- JSON.stringify(runs) %>,
+		  xkey: 'name',
+		  hideHover: 'true',
+		  ykeys: <%- JSON.stringify(devices) %>,
+		  labels: <%- JSON.stringify(devices) %>,
+		  hoverCallback: function(index, options, content){
+	        row = options.data[index];
+	        return "Run: " + row.name + "<br/><a href='/runs/" + row.id + "'>Detail</a>";
+	       }
+		});
+	  </script>
+	</div>
+	</div>
+	<div class="col-md-6">
+	<h4 class="text-center">Last Run - Status</h4>
+	<div id="chartContainer1">
+		 <script type="text/javascript">
+		   Morris.Donut({
+		  	element: 'chartContainer1',
+			  data: <%- JSON.stringify(status) %>,
+			});
+	  </script>
+	</div>
+	</div>
+</div>

@@ -19,6 +19,7 @@ exports.show = function (req,res) {
   models.Run.find(req.params["id"]).success(function (run) {
     if(!run){
       res.send(404,"Unable to find run");
+      return;
     }
     models.RunItem.findAll({where:{runId: run.id},include:[models.Device,models.Scenario]}).success(function (runItems) {
        res.render('runs/show',{menu: 'runs',run: run,runItems: runItems})
