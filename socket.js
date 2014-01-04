@@ -54,9 +54,7 @@ sio.sockets.on('connection', function(socket) {
 		});
 
 		models.Scenario.bulkCreate(scenarios)
-			.success(function(){
-				 console.log("created scenarios");
-			}).error(function(){
+			.error(function(){
 				console.log("error while saving scenarios" );
 			});
 	});
