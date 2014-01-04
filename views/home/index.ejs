@@ -1,37 +1,78 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+<div class="row gap">
+<div class="col-md-12">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Execution Result</h3>
+	  </div>
+	  <div class="panel-body">
+	  <% if(lastrun.dynamicStatus()==="Running"){ %> 
+			<div class="alert alert-warning">Tests are currently running</div>
+	  <% }else{ %>
+	  <ul class="stats-list">
+	  	<li>
+	  		<i class="fa fa-mobile fa-fw"></i>
+	  		<small>Executed in </small>
+	  		<strong><%= lastrun.runitems.length %></strong>
+	  		<small> Device(s)</small>
+	  	</li>
+	  	<% var deviceSenarioStatus = lastrun.scenariosStatusCount() %>
+	  	<% deviceSenarioStatus.forEach(function(d){ %>
+			<li>
+		  		<strong><%= d.device %> </strong> - <span class="label <%= generateStatusClass(d.deviceSatus) %>"> <%= d.deviceSatus %></span>
+		  		<small>Status Count:- <% for (s in  d.status){ %> <span class="label <%= generateStatusClass(s) %>">&nbsp; <%= s %> : <%= d.status[s] %>&nbsp; </span><%} %></small>
+	  		</li>
+	  	<% }) %>
+	  </ul>
+	  <% } %>
 
+	  </div>
+	 </div>
+	 </div>
+</div>
 <div class="row">
 	<div class="col-md-6">
-	<h4 class="text-center">Last 5 runs</h4>
-	<div id="chartContainer">
-		
-	  <script type="text/javascript">
-	   Morris.Bar({
-	  	element: 'chartContainer',
-		  data: <%- JSON.stringify(runs) %>,
-		  xkey: 'name',
-		  hideHover: 'true',
-		  ykeys: <%- JSON.stringify(devices) %>,
-		  labels: <%- JSON.stringify(devices) %>,
-		  hoverCallback: function(index, options, content){
-	        row = options.data[index];
-	        return "Run: " + row.name + "<br/><a href='/runs/" + row.id + "'>Detail</a>";
-	       }
-		});
-	  </script>
-	</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Last 5 runs</h3>
+	  </div>
+	  <div class="panel-body">
+		<div id="chartContainer">
+		  <script type="text/javascript">
+		   Morris.Bar({
+		  	element: 'chartContainer',
+			  data: <%- JSON.stringify(runs) %>,
+			  xkey: 'name',
+			  hideHover: 'true',
+			  ykeys: <%- JSON.stringify(devices) %>,
+			  labels: <%- JSON.stringify(devices) %>,
+			  hoverCallback: function(index, options, content){
+		        row = options.data[index];
+		        return "Run: " + row.name + "<br/><a href='/runs/" + row.id + "'>Detail</a>";
+		       }
+			});
+		  </script>
+		</div>
+		</div>
+		</div>
 	</div>
 	<div class="col-md-6">
-	<h4 class="text-center">Last Run - Status</h4>
-	<div id="chartContainer1">
-		 <script type="text/javascript">
-		   Morris.Donut({
-		  	element: 'chartContainer1',
-			  data: <%- JSON.stringify(status) %>,
-			});
-	  </script>
-	</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Execution Status</h3>
+	  </div>
+	   <div class="panel-body">
+		<div id="chartContainer1">
+			 <script type="text/javascript">
+			   Morris.Donut({
+			  	element: 'chartContainer1',
+				  data: <%- JSON.stringify(status) %>,
+				});
+		  </script>
+		</div>
+	   </div>
+	  </div>
 	</div>
 </div>

@@ -9,7 +9,7 @@ exports.list = function(req, res){
  	})));
  	var status = getLastRunStatus(runs[0]);
 
- 	res.render('home/index',{menu: 'dashboard',runs: r.reverse(),devices: devices , status: status});
+ 	res.render('home/index',{menu: 'dashboard',runs: r.reverse(),devices: devices , status: status, lastrun: runs[0]});
  });
 };
 

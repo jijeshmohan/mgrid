@@ -7,3 +7,45 @@
  .green {
      color: green;
  }
+ .gap{
+ 	margin-top: 10px;
+ }
+ .stats-list{
+ 	margin: 0;
+	padding: 0;
+	list-style: none;
+ }
+.stats-list li{
+	background-color: #F5F5F5;
+	border: 1px solid #DDDDDD;
+	cursor: pointer;
+	margin: 0 0 10px;
+	padding: 13px 20px 10px;
+	position: relative;
+}
+.stat-boxes {
+	border-right: 1px solid #DCDCDC;
+	box-shadow: 1px 0 0 0 #FFFFFF;
+	margin-right: 12px;
+	padding: 10px 14px 6px 4px;
+	font-size: 10px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #ffffff;
+}
+
+.statbox{
+	background-color: #F6F6F6;
+	background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(#F9F9F9), to(#EDEDED));
+	background-image: -webkit-linear-gradient(top, #F9F9F9 0%, #EDEDED 100%);
+	background-image: -moz-linear-gradient(top, #F9F9F9 0%, #EDEDED 100%);
+	background-image: -ms-linear-gradient(top, #F9F9F9 0%, #EDEDED 100%);
+	background-image: -o-linear-gradient(top, #F9F9F9 0%, #EDEDED 100%);
+	background-image: linear-gradient(top, #F9F9F9 0%, #EDEDED 100%);
+	border: 1px solid #d5d5d5;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 0 0 #FFFFFF inset, 0 1px 0 rgba(255,255,255,0.4);
+	display: inline-block;
+	line-height: 18px;
+	margin: 0 10px 10px;
+	padding: 0 10px;
+}

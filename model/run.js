@@ -35,6 +35,11 @@ module.exports = function(sequelize, DataTypes) {
         }
         return this.status;
       },
+      scenariosStatusCount: function(){
+        return _.map(this.runitems,function(item){
+            return { device: item.device.name, deviceSatus: item.status, status: _.countBy(item.scenarios,function(s){ return s.status})};
+        });
+      },
       runTypeText: function () {
         if(this.runType === "All"){
           return "All Tests in all devices"
