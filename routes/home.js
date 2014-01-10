@@ -2,15 +2,15 @@ var _ = require('underscore')._;
 
 
 exports.list = function(req, res){
-	 models.Run.findAll({order: 'createdAt DESC',include:[{model: models.RunItem,include: [{model: models.Scenario},{model: models.Device}]}]}).success(function(runs) {
- 	var r=generateRuns(runs.slice(0,5));
- 	var devices = _.uniq(_.flatten(_.map(r,function(rr){
- 		return _.keys(_.omit(rr,'name','id'));
- 	})));
- 	var status = getLastRunStatus(runs[0]);
+	models.Run.findAll({order: 'createdAt DESC',include:[{model: models.RunItem,include: [{model: models.Scenario},{model: models.Device}]}]}).success(function(runs) {
+		var r=generateRuns(runs.slice(0,5));
+		var devices = _.uniq(_.flatten(_.map(r,function(rr){
+			return _.keys(_.omit(rr,'name','id'));
+		})));
+		var status = getLastRunStatus(runs[0]);
 
- 	res.render('home/index',{menu: 'dashboard',runs: r.reverse(),devices: devices , status: status, lastrun: runs[0]});
- });
+		res.render('home/index',{menu: 'dashboard',runs: r.reverse(),devices: devices , status: status, lastrun: runs[0]});
+	});
 };
 
 function getLastRunStatus(r){
@@ -23,7 +23,7 @@ function getLastRunStatus(r){
 	});
 
 	return _.map(_.pairs(status_count),function(s){
-			return {label: s[0],value: s[1]};
+		return {label: s[0],value: s[1]};
 	});
 }
 

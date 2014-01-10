@@ -19,6 +19,7 @@ sio.sockets.on('connection', function(socket) {
 	       			socket.disconnect();
 	       		}).success(function(){
 	       			socket.set("deviceId",device.id);
+	       			socket.set("runitemId",null);
 	       			socket.broadcast.emit('device_status', {id: device.id, status: 'Available'})
 	       		});
 	       	});
@@ -32,6 +33,7 @@ sio.sockets.on('connection', function(socket) {
   });
 
   socket.on('result',function(data){
+  	socket.set("runitemId",null);
 	var isPassed = _.every(_.flatten(_.map(_.flatten(_.map(data.result,function(feature){
 	  		return _.where(feature.elements,{"keyword": "Scenario"});
 	  	})), function(scenario){
@@ -68,16 +70,30 @@ sio.sockets.on('connection', function(socket) {
   		item.save().error(function(){
   			console.log("Error while updating runitem");
   		});
-  		
   	});
   });
 
      // Disconnect
   socket.on('disconnect', function (data) {
-  	 console.log("disconnect" + deviceName)
+  	 console.log("disconnect: " + deviceName)
   	 models.Device.find({where: {name: deviceName}})
        	.success(function(device) {
        		if (deviceName !== ""){
+       			socket.get("runitemId",function (err, value) {
+       				if(err){
+       					console.log("-------------------------------------");
+       				}
+       				console.log("Runitem ID " + value)
+     				if(value !== null){
+     					socket.set("runitemId",null);
+     					models.RunItem.find(value).success(function(item){
+     						item.status="Error";
+     						item.save().error(function(){
+					  			console.log("Error while updating runitem");
+					  		});
+     					}).error(function(){});
+     				}
+    			});
 	       		deviceName = device.name;
 	       		device.updateStatus(false).error(function(){
 	       			console.log("Unable to update the device status")

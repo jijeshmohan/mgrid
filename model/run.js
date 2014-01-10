@@ -24,6 +24,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     instanceMethods: {
       dynamicStatus: function(){
+        if(_.some(this.runitems, function(s){return s.status === 'Error'})){ 
+          return 'Failed';
+        }
         if(_.every(this.runitems, function(s){return s.status === 'Passed'})){ 
           return 'Passed';
         }

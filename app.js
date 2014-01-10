@@ -59,6 +59,7 @@ app.locals({
 	generateStatusClass: function(status){ 
 		switch(status.toLowerCase()){ 
 			case 'failed':
+			case 'error':
 			return 'label-danger';
 			break; 
 			case 'passed': 

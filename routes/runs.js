@@ -1,5 +1,5 @@
 var form = require('express-form'),
-      field = form.field;
+field = form.field;
 
 var Sequelize = require("sequelize");
 
@@ -22,11 +22,11 @@ exports.show = function (req,res) {
       return;
     }
     models.RunItem.findAll({where:{runId: run.id},include:[models.Device,models.Scenario]}).success(function (runItems) {
-       res.render('runs/show',{menu: 'runs',run: run,runItems: runItems})
-    });
-   
+     res.render('runs/show',{menu: 'runs',run: run,runItems: runItems})
+   });
+    
   }).error(function(error){
-      res.send(error);
+    res.send(error);
   });
 };
 
@@ -61,42 +61,43 @@ function createNewRun (req,res) {
   var chainer=new Sequelize.Utils.QueryChainer;
 
   chainer.add(models.Run.create({
-      name: req.body.name,
-      status: 'Not Started',
-      runType: req.body.runType,
-      comments: req.body.comments
-    }));
+    name: req.body.name,
+    status: 'Not Started',
+    runType: req.body.runType,
+    comments: req.body.comments
+  }));
 
   for (var i = req.body.devices.length - 1; i >= 0; i--) {
     chainer.add(models.RunItem.create({deviceId: parseInt(req.body.devices[i])}));
   }
 
-   chainer.run().success(function(results){
+  chainer.run().success(function(results){
     run = results[0];
     results.shift()
     run.setRunitems(results).success(function(){
-        res.redirect('/runs');
-        sendRunRequests(results);
-      }).error(function  (errors) {
-         req.session.messages = ["Error while creating new run", errors.toString()];
-        res.redirect('/runs/new');
-      });
-   }).error(function(errors) {
-        req.session.messages = ["Error while creating new run", errors.toString()];
-        res.redirect('/runs/new');
-    });
+      res.redirect('/runs');
+      sendRunRequests(results);
+    }).error(function  (errors) {
+     req.session.messages = ["Error while creating new run", errors.toString()];
+     res.redirect('/runs/new');
+   });
+  }).error(function(errors) {
+    req.session.messages = ["Error while creating new run", errors.toString()];
+    res.redirect('/runs/new');
+  });
 }
 
 function sendRunRequests  (runItems) {
   runItems.forEach(function(item){
-     sio.sockets.clients().forEach(function (socket) {
-      socket.get("deviceId", function (err, id) {
-        if(id === item.deviceId){
-           socket.emit("execute",{runitem: item});
-        }
-      });
-     });
-   });
+   sio.sockets.clients().forEach(function (socket) {
+    socket.get("deviceId", function (err, id) {
+      if(id === item.deviceId){
+        socket.set("runitemId",item.id);
+        socket.emit("execute",{runitem: item});
+      }
+    });
+  });
+ });
 }
 
 exports.form = form(
