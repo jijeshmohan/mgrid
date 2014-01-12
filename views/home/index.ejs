@@ -2,6 +2,95 @@
 <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
 <div class="row gap">
+	<div class="col-lg-4">
+        <div class="panel <% if(lastrun.dynamicStatus()==="Running"){ %> panel-warning <% }else{%> panel-success <%}%>">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+              	  <% if(lastrun.dynamicStatus()==="Running"){ %> 
+					<i class="fa fa-spinner fa-spin fa-5x"></i>
+				 <% }else if(lastrun.dynamicStatus()==="Failed"){ %> 
+				 	<i class="fa fa-ban fa-5x"></i>
+	 			 <% }else{ %>
+               		 <i class="fa fa-check-circle-o fa-fw fa-5x"></i>
+                <% } %>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading"><%= lastrun.dynamicStatus() %></p>
+                <p class="announcement-text">Last Run</p>
+              </div>
+            </div>
+          </div>
+          <a href="/runs/<%= lastrun.id %>">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Run
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+	  </div>
+	<div class="col-lg-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa fa-tasks fa-fw fa-5x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading"><%= runcount %></p>
+                <p class="announcement-text">Execution(s)</p>
+              </div>
+            </div>
+          </div>
+          <a href="/runs">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Execution
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+	  </div>
+	  <div class="col-lg-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6">
+                <i class="fa fa-mobile fa-fw fa-5x"></i>
+              </div>
+              <div class="col-xs-6 text-right">
+                <p class="announcement-heading" id="deviceCount"><%= deviceCount %></p>
+                <p class="announcement-text">Devices</p>
+              </div>
+            </div>
+          </div>
+          <a href="/devices">
+            <div class="panel-footer announcement-bottom">
+              <div class="row">
+                <div class="col-xs-6">
+                  View Devices
+                </div>
+                <div class="col-xs-6 text-right">
+                  <i class="fa fa-arrow-circle-right"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+	  </div>
+</div>
+<div class="row">
 <div class="col-md-12">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -11,23 +100,22 @@
 	  <% if(lastrun.dynamicStatus()==="Running"){ %> 
 			<div class="alert alert-warning">Tests are currently running</div>
 	  <% }else{ %>
-	  <ul class="stats-list">
-	  	<li>
-	  		<i class="fa fa-mobile fa-fw"></i>
-	  		<small>Executed in </small>
-	  		<strong><%= lastrun.runitems.length %></strong>
-	  		<small> Device(s)</small>
-	  	</li>
-	  	<% var deviceSenarioStatus = lastrun.scenariosStatusCount() %>
-	  	<% deviceSenarioStatus.forEach(function(d){ %>
-			<li>
-		  		<strong><%= d.device %> </strong> - <span class="label <%= generateStatusClass(d.deviceSatus) %>"> <%= d.deviceSatus %></span>
-		  		<small>Status Count:- <% for (s in  d.status){ %> <span class="label <%= generateStatusClass(s) %>">&nbsp; <%= s %> : <%= d.status[s] %>&nbsp; </span><%} %></small>
-	  		</li>
-	  	<% }) %>
-	  </ul>
+		  <ul class="stats-list">
+		  	<li>
+		  		<i class="fa fa-mobile fa-fw"></i>
+		  		<small>Executed in </small>
+		  		<strong><%= lastrun.runitems.length %></strong>
+		  		<small> Device(s)</small>
+		  	</li>
+		  	<% var deviceSenarioStatus = lastrun.scenariosStatusCount() %>
+		  	<% deviceSenarioStatus.forEach(function(d){ %>
+				<li>
+			  		<strong><%= d.device %> </strong> - <span class="label <%= generateStatusClass(d.deviceSatus) %>"> <%= d.deviceSatus %></span>
+			  		<small>Status Count:- <% for (s in  d.status){ %> <span class="label <%= generateStatusClass(s) %>">&nbsp; <%= s %> : <%= d.status[s] %>&nbsp; </span><%} %></small>
+		  		</li>
+		  	<% }) %>
+		  </ul>
 	  <% } %>
-
 	  </div>
 	 </div>
 	 </div>
@@ -76,3 +164,20 @@
 	  </div>
 	</div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io.connect('http://localhost:3000');
+socket.on('connect', function(){
+  socket.on('device_status', function(data){
+  	var count = parseInt($("#deviceCount").text())
+  	if(data.status ==="Available"){
+		$("#deviceCount").text(count+1);
+	}else{
+		$("#deviceCount").text(count-1);
+	}
+    td.html(icon +" "+ data.status);
+  });
+  socket.on('disconnect', function(){});
+});
+</script>
