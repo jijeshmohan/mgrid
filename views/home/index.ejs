@@ -1,22 +1,23 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
+<% var runStatus = lastrun.dynamicStatus() %>
 <div class="row gap">
 	<div class="col-lg-4">
-        <div class="panel <% if(lastrun.dynamicStatus()==="Running"){ %> panel-warning <% }else{%> panel-success <%}%>">
+        <div class="panel <% if(runStatus==="Running"){ %> panel-warning <% }else{%> panel-success <%}%>">
           <div class="panel-heading">
             <div class="row">
               <div class="col-xs-6">
-              	  <% if(lastrun.dynamicStatus()==="Running"){ %> 
+              	  <% if(runStatus==="Running"){ %> 
 					<i class="fa fa-spinner fa-spin fa-5x"></i>
-				 <% }else if(lastrun.dynamicStatus()==="Failed"){ %> 
+				 <% }else if(runStatus==="Failed"){ %> 
 				 	<i class="fa fa-ban fa-5x"></i>
 	 			 <% }else{ %>
                		 <i class="fa fa-check-circle-o fa-fw fa-5x"></i>
                 <% } %>
               </div>
               <div class="col-xs-6 text-right">
-                <p class="announcement-heading"><%= lastrun.dynamicStatus() %></p>
+                <p class="announcement-heading"><span class="label <%= generateStatusClass(runStatus) %>"> <%= runStatus %></span></p>
                 <p class="announcement-text">Last Run</p>
               </div>
             </div>
