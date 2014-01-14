@@ -16,4 +16,5 @@ module.exports = function(app) {
     app.get('/runs/new', runs.newRun);
     app.post('/runs',runs.form,runs.create);
     app.get('/runs/:id',runs.show);
+    app.get('/runs/:id/compare',runs.compare);
 };

@@ -14,6 +14,18 @@ exports.list = function(req, res) {
   });
 };
 
+exports.compare = function (req,res){
+  models.Run.find({where:{id: req.params["id"]},include:[{model: models.RunItem,include: [{model: models.Scenario},{model: models.Device}]}]}).success(function (run) {
+    if(!run){
+      res.send(404,"Unable to find run");
+      return;
+    }
+     res.render('runs/compare',{menu: 'runs',run: run})
+  }).error(function(error){
+    res.send(error);
+  });
+};
+
 exports.show = function (req,res) {
 
   models.Run.find(req.params["id"]).success(function (run) {
