@@ -1,38 +1,28 @@
 <h3>Run</h3>
 <hr/>
 <div class="row">
-	<div class="col-md-3">
-		<span>Run Name</span>
-	</div>
-	<div class="col-md-4">
-		: <span><strong><%= run.name %></strong></span>
-	</div>
+<div class="col-md-12">
+	<table class="table table-striped table-bordered">
+		<tr>
+			<td>Run Name</td>
+			<td><%= run.name %></td>
+		</tr>
+		<tr>
+			<td>Run Type</td>
+			<td><%= run.runTypeText() %></td>
+		</tr>
+		<tr>
+			<td>Comments</td>
+			<td><%= run.comments %></td>
+		</tr>
+		<tr>
+			<td>Date</td>
+			<td><%= formatDate(run.createdAt) %></td>
+		</tr>
+	</table>
 </div>
-<div class="row">
-	<div class="col-md-3">
-		<span>Run Type</span>
-	</div>
-	<div class="col-md-4">
-		: <strong><%= run.runTypeText() %></strong>
-	</div>
 </div>
-<div class="row">
-	<div class="col-md-3">
-		<span>Comments</span>
-	</div>
-	<div class="col-md-4">
-		: <strong><%= run.comments %></strong>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-3">
-		<span>Date</span>
-	</div>
-	<div class="col-md-4">
-		: <strong><%= formatDate(run.createdAt) %></strong>
-	</div>
-</div>
-<br/>
+
 <div class="row">
 <div class="col-md-12">
 	<h4>Devices</h4>
