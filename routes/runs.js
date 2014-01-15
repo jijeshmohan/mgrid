@@ -1,5 +1,6 @@
 var form = require('express-form'),
-field = form.field;
+   _ = require('underscore')._,
+  field = form.field;
 
 var Sequelize = require("sequelize");
 
@@ -20,7 +21,7 @@ exports.compare = function (req,res){
       res.send(404,"Unable to find run");
       return;
     }
-     res.render('runs/compare',{menu: 'runs',run: run})
+     res.render('runs/compare',{menu: 'runs',run: run,_: _})
   }).error(function(error){
     res.send(error);
   });

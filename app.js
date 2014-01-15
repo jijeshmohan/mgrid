@@ -73,6 +73,22 @@ app.locals({
 			break;
 		}
 	},
+	displayIcons: function(status){
+		var stat="";
+		switch(status.toLowerCase()){
+			case 'passed':
+				 stat="fa-check green";
+				 break;
+			case 'skipped':
+				 stat="fa-circle-o yellow";
+				 break;
+			case 'failed':
+			case 'error':
+				 stat="fa-ban red";
+				 break;
+		}
+		return "<i class=\"fa "+stat+"\"></i>"
+	},
 	groupScenarios: function(scenarios){
 		return _.groupBy(scenarios,function(s){ return s.feature; });
 	},

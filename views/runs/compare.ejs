@@ -1,0 +1,35 @@
+<h3>Compare Run - <%= run.name %></h3>
+<hr/>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<% run.runitems.forEach(function(item){ %>
+					<th><%= item.device.name %></th>
+					<% }) %>
+				</tr>
+			</thead>
+			<tbody>
+				<% var features = _.groupBy(run.runitems[0].scenarios, function(s){ return s.feature;});%>
+				<% _.each(features,function(scenarios,key,list) { %>
+				<tr>
+					<td class='feature'><%= key %></td>
+					<% run.runitems.forEach(function(item){ %>
+		                <td></td>
+		            <% }); %>
+				</tr>
+				<% scenarios.forEach(function(scenario){ %>
+					<tr>
+						<td class="scenario"><%= scenario.name %></td>
+						<% run.runitems.forEach(function(item){ %>
+							<td><%- displayIcons(_.find(item.scenarios,function(s){ return s.name === scenario.name }).status) %></td>
+						<% }) %>
+					</tr>
+					<% }) %>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</div>
