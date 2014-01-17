@@ -4,6 +4,37 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
+        express: {
+            options: {
+              // Override defaults here
+            },
+            dev: {
+              options: {
+                script: 'app.js'
+              }
+            },
+            prod: {
+              options: {
+                script: 'app.js',
+                node_env: 'production'
+              }
+            },
+            test: {
+              options: {
+                script: 'app.js',
+                node_env: 'test'
+              }
+            }
+          },
+        watch: {
+            express: {
+              files:  [ '**/*.js' ],
+              tasks:  [ 'express:dev' ],
+              options: {
+                spawn: false // Without this option specified express won't be reloaded
+              }
+            }
+        },
         sequelize: {
             options: {
                 migrationsPath: __dirname + '/migrations',
@@ -24,6 +55,8 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-sequelize');
+    grunt.loadNpmTasks('grunt-express-server');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     // task(s).
     grunt.registerTask('deleteRuns', 'Delete all runs from db', function() {
         grunt.log.writeln('Deleteing data from db');
@@ -61,5 +94,5 @@ module.exports = function(grunt) {
 
     });
     grunt.registerTask('default', ['jshint']);
-
+    grunt.registerTask('server', [ 'express:dev', 'watch' ])
 };

@@ -15,13 +15,15 @@
     "sequelize": "*",
     "socket.io": "*",
     "sqlite3": "*",
-    "express-form":"0.10.x",
-    "moment":"*",
-    "underscore":"*"
+    "express-form": "0.10.x",
+    "moment": "*",
+    "underscore": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.6.3",
-    "grunt-sequelize" : "*"
+    "grunt-sequelize": "*",
+    "grunt-express-server": "~0.4.11",
+    "grunt-contrib-watch": "~0.5.3"
   }
 }
