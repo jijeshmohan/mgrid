@@ -15,6 +15,9 @@ exports.list = function(req, res){
 };
 
 function getLastRunStatus(r){
+	if(r === undefined){
+		return [{}];
+	}
 	var status_count= _.countBy(_.flatten(_.map(r.runitems,function(item){
 		return _.flatten(_.map(item.scenarios,function(s){
 			return {status: s.status}

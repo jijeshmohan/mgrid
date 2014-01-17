@@ -1,7 +1,8 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
-<% var runStatus = lastrun.dynamicStatus() %>
+<% var runStatus = "" %>
+<% if(lastrun){runStatus = lastrun.dynamicStatus(); } %>
 <div class="row gap">
 	<div class="col-lg-4">
         <div class="panel <% if(runStatus==="Running"){ %> panel-warning <% }else{%> panel-success <%}%>">
@@ -22,7 +23,7 @@
               </div>
             </div>
           </div>
-          <a href="/runs/<%= lastrun.id %>">
+          <a href="<% if(lastrun){%>/runs/<%=lastrun.id %><%}%>">
             <div class="panel-footer announcement-bottom">
               <div class="row">
                 <div class="col-xs-6">
@@ -98,6 +99,7 @@
 	    <h3 class="panel-title">Execution Result</h3>
 	  </div>
 	  <div class="panel-body">
+	  <% if(lastrun) {%>
 	  <% if(lastrun.dynamicStatus()==="Running"){ %> 
 			<div class="alert alert-warning">Tests are currently running</div>
 	  <% }else{ %>
@@ -116,6 +118,7 @@
 		  		</li>
 		  	<% }) %>
 		  </ul>
+	  <% } %>
 	  <% } %>
 	  </div>
 	 </div>
