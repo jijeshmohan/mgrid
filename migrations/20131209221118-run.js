@@ -33,8 +33,7 @@ module.exports = {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       }
-     });
-    done()
+     }).complete(done);
   },
   down: function(migration, DataTypes, done) {
     migration.dropTable('runs');

@@ -108,12 +108,14 @@ GLOBAL.models = require('./model')(sequelize)
 // Routes
 require('./routes')(app);
 
-var server = http.createServer(app);
+// var server = http.createServer(app);
 
-GLOBAL.sio = require('socket.io').listen(server);
+// GLOBAL.sio = require('socket.io').listen(server);
 
-require('./socket')
+// require('./socket')
 
-server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+// server.listen(app.get('port'), function(){
+//   console.log('Express server listening on port ' + app.get('port'));
+// });
+
+exports.app = app;

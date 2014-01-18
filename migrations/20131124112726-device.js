@@ -37,9 +37,7 @@ module.exports = {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       }
-    });
-    // migration.addIndex('devices',['name']);
-    done()
+    }).complete(done);
   },
   down: function(migration, DataTypes, done) {
     // add reverting commands here, calling 'done' when finished

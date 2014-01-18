@@ -1,12 +1,13 @@
 module.exports = {
   up: function(migration, DataTypes, done) {
-     migration.createTable(
+     // add altering commands here, calling 'done' when finished
+      migration.createTable(
     'runitems',
     {
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
       runId: {
         type: DataTypes.INTEGER
@@ -29,8 +30,7 @@ module.exports = {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
       }
-    });
-    done()
+    }).complete(done);
   },
   down: function(migration, DataTypes, done) {
     migration.dropTable('runitems');

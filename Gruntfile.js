@@ -58,6 +58,33 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-express-server');
     grunt.loadNpmTasks('grunt-contrib-watch');
     // task(s).
+
+
+    grunt.registerTask('migrate', 'migrate and sync db', function() {
+        grunt.log.writeln('Migrate db');
+
+        var env = process.env.NODE_ENV || 'development';
+        var config = require(__dirname + '/config/config')[env];
+
+        var dbpath = __dirname + "/" + config.storage;
+
+        var sequelize = new Sequelize(config.database, '', '', {
+            dialect: 'sqlite',
+            omitNull: true,
+            storage: dbpath
+        });
+
+        var models = require('./model')(sequelize);
+        var done = this.async();
+        sequelize.sync({ force: true })
+          .complete(function(err) {
+            if (err) {
+              done(err);
+            } else {
+                done();
+            }
+        });
+    });
     grunt.registerTask('deleteRuns', 'Delete all runs from db', function() {
         grunt.log.writeln('Deleteing data from db');
 
