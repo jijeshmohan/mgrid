@@ -19,7 +19,7 @@
               </div>
               <div class="col-xs-6 text-right">
                 <p class="announcement-heading"><span class="label <%= generateStatusClass(runStatus) %>"> <%= runStatus %></span></p>
-                <p class="announcement-text">Last Run</p>
+                <p class="announcement-text">Last Run - <%= formatDate(lastrun.createdAt) %></p>
               </div>
             </div>
           </div>
