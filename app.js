@@ -11,7 +11,7 @@ var path = require('path');
 var moment = require('moment');
 var _ = require('underscore')._;
 var app = express();
-
+var helpers = require('./libs');
 GLOBAL.app = app
 
 var Sequelize = require("sequelize");
@@ -55,47 +55,7 @@ app.use(function(error, req, res, next) {
  res.render('500.ejs', {title:'500: Internal Server Error', error: error});
 });
 
-app.locals({
-	generateStatusClass: function(status){ 
-		switch(status.toLowerCase()){ 
-			case 'failed':
-			case 'error':
-			return 'label-danger';
-			break; 
-			case 'passed': 
-			return 'label-success';break; 
-			case 'running':
-			case 'skipped':
-			return 'label-warning';
-			break;
-			case 'not started':
-			return 'label-default';
-			break;
-		}
-	},
-	displayIcons: function(status){
-		var stat="";
-		switch(status.toLowerCase()){
-			case 'passed':
-				 stat="fa-check green";
-				 break;
-			case 'skipped':
-				 stat="fa-circle-o yellow";
-				 break;
-			case 'failed':
-			case 'error':
-				 stat="fa-ban red";
-				 break;
-		}
-		return "<i class=\"fa "+stat+"\"></i>"
-	},
-	groupScenarios: function(scenarios){
-		return _.groupBy(scenarios,function(s){ return s.feature; });
-	},
-	formatDate: function(datetime){
-		return moment(datetime).fromNow();
-	} 
-});
+app.locals(helpers);
 
 // development only
 if ('development' == app.get('env')) {
