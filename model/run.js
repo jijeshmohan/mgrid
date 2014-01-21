@@ -2,11 +2,6 @@ var _ = require('underscore')._;
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('run',{
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
       status: {
          type:   DataTypes.ENUM,
          values: ['Not Started', 'Completed', 'Running']
@@ -23,6 +18,9 @@ module.exports = function(sequelize, DataTypes) {
       
     },
     instanceMethods: {
+      name: function(){
+        return "Run - " + this.id;
+      },      
       dynamicStatus: function(){
         if(_.some(this.runitems, function(s){return s.status === 'Error'})){ 
           return 'Failed';

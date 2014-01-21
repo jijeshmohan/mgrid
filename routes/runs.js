@@ -74,7 +74,6 @@ function createNewRun (req,res) {
   var chainer=new Sequelize.Utils.QueryChainer;
 
   chainer.add(models.Run.create({
-    name: req.body.name,
     status: 'Not Started',
     runType: req.body.runType,
     comments: req.body.comments
@@ -114,7 +113,6 @@ function sendRunRequests  (runItems) {
 }
 
 exports.form = form(
-  field("name").trim().required(),
   field("runType").trim().required(),
   field("comments").trim().required(),
   field("devices").trim().required()

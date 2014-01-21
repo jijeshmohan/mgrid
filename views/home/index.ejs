@@ -19,7 +19,7 @@
               </div>
               <div class="col-xs-6 text-right">
                 <p class="announcement-heading"><span class="label <%= generateStatusClass(runStatus) %>"> <%= runStatus %></span></p>
-                <p class="announcement-text">Last Run - <%= formatDate(lastrun.createdAt) %></p>
+                <p class="announcement-text">Last Run <% if(lastrun){ %> - <%= formatDate(lastrun.createdAt) %> <%}%></p>
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@
         </div>
 	  </div>
 </div>
-<div class="row">
+<div class="row clear">
 <div class="col-md-12">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -142,7 +142,7 @@
 			  labels: <%- JSON.stringify(devices) %>,
 			  hoverCallback: function(index, options, content){
 		        row = options.data[index];
-		        return "Run: " + row.name + "<br/><a href='/runs/" + row.id + "'>Detail</a>";
+		        return "Run: " + row.id + "<br/><a href='/runs/" + row.id + "'>Detail</a>";
 		       }
 			});
 		  </script>
