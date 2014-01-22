@@ -21,7 +21,7 @@
 	  <td><i class="fa fa-list"></i></td>
 	  <td><a href='/runs/<%= run.id %>'><%=: run.name() | capitalize %></a></td>
 	  <td><%=: run.runTypeText() %></td>
-	  <td><span class="label <%= generateStatusClass(runStatus) %>"><%= runStatus %></span></td>
+	  <td><span class="label <%= generateStatusClass(runStatus) %>"><%= runStatus %></span> : <small class="text-muted"><%= deviceWiseStatus(run) %></small></td>
 	  <td><span class="badge"><%=: run.runitems.length %></span></td>
 	  <td><%=: formatDate(run.createdAt) %></td>
 	</tr>

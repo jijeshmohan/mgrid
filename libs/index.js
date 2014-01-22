@@ -40,5 +40,12 @@ module.exports = {generateStatusClass: function(status){
 	},
 	formatDate: function(datetime){
 		return moment(datetime).fromNow();
-	} 
+	},
+	deviceWiseStatus: function(run){
+		var result="";
+		_.each(run.runitems,function(item){
+			result+=" "+item.device.name+" ["+ item.status+"]"
+		});
+		return result;
+	}
 };

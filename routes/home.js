@@ -37,7 +37,7 @@ function generateRuns(runs){
 		var device_info = _.map(r.runitems,function(runitem){
 			return  [runitem.device.name, runitem.scenarios.length];
 		});
-		result.name = r.name;
+		result.name = r.name();
 		result.id=r.id;
 		device_info.forEach(function(d){
 			result[d[0]] = d[1];

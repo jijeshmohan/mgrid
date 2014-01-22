@@ -5,7 +5,7 @@ var form = require('express-form'),
 var Sequelize = require("sequelize");
 
 exports.list = function(req, res) {
-  models.Run.findAll({order: 'createdAt DESC',include:[{model: models.RunItem,include: [{model: models.Scenario}]}]}).success(function(runs) {
+  models.Run.findAll({order: 'createdAt DESC',include:[{model: models.RunItem,include: [{model: models.Scenario},{model: models.Device}]}]}).success(function(runs) {
     res.render('runs/index', {
       runs: runs,
       menu: 'runs'
