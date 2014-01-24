@@ -42,7 +42,8 @@ sio.sockets.on('connection', function(socket) {
 
 	_.each(data.result,function(feature){
 		var feature_name = feature.name;
-		var scenarios= _.map(_.where(feature.elements,{"keyword": "Scenario"}),function(scenario){
+		var map = new Object();
+		var scenarios= _.map(_.filter(feature.elements,function(element){return element.keyword === "Scenario" || element.keyword === "Scenario Outline"}),function(scenario){
 			var results = _.flatten(_.map(scenario.steps,function(s){ return s.result.status}));
 			var status="";
 			if(_.every(results,function(s){return s === 'passed'})){
@@ -52,7 +53,12 @@ sio.sockets.on('connection', function(socket) {
 			}else{
 				status="Failed";
 			}
-			return {name: scenario.name,feature: feature_name,status: status,runitemId: data.id}
+			var scenarioName = scenario.name;
+			if(scenario.keyword==="Scenario Outline"){
+				map[scenario.name]=map[scenario.name]?map[scenario.name]+1:1;
+				scenarioName+="_"+map[scenario.name];
+			}
+			return {name: scenarioName,feature: feature_name,status: status,runitemId: data.id}
 		});
 
 		models.Scenario.bulkCreate(scenarios)
