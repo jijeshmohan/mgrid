@@ -21,8 +21,9 @@ Mobile Testing grid (mgrid) helps to execute mobile automation tests in actual d
  1. Clone this repo: `git clone https://github.com/jijeshmohan/mgrid.git`
  2. Go to the directory : `cd mgrid`
  3. Run npm install `npm install`
- 4. Run server `npm start` 
- 5. Open `localhost:3000` in browser
+ 4. Run db migartion `grunt migrate`
+ 5. Run server `npm start` 
+ 6. Open `localhost:3000` in browser
  
  
  To run tests you need to run [mgrid-client](https://github.com/jijeshmohan/mgrid-client).
