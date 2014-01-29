@@ -172,6 +172,13 @@
 	  </div>
 	</div>
 </div>
+<% if(runStatus==="Running"){ %> 
+	<script type="text/javascript">
+	  setTimeout(function(){
+	    location = ''
+	  },15 * 1000)
+	</script>
+<% } %>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
