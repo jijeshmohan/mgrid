@@ -157,12 +157,16 @@
 	  </div>
 	   <div class="panel-body">
 		<div id="chartContainer1">
-			 <script type="text/javascript">
-			   Morris.Donut({
-			  	element: 'chartContainer1',
-				  data: <%- JSON.stringify(status) %>,
-				});
-		  </script>
+			 <% if(runStatus==="Running"){ %> 
+			 	<i class="fa fa-spinner fa-spin fa-5x"></i>
+			 <% }else { %>
+				 <script type="text/javascript">
+					   Morris.Donut({
+					  	element: 'chartContainer1',
+						  data: <%- JSON.stringify(status) %>,
+						});
+				  </script>
+			 <% }%>
 		</div>
 	   </div>
 	  </div>
