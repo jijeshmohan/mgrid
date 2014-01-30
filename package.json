@@ -27,5 +27,7 @@
     "grunt-contrib-watch": "~0.5.3",
     "chai":"*",
     "mocha": "*" 
-  }
+  },
+  "private": true,
+  "main": "server.js"
 }

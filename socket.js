@@ -1,7 +1,7 @@
 var _ = require('underscore')._;
 
 sio.configure('production', function() {
-    io.set('log level', 1);
+    sio.set('log level', 1);
 });
 
 sio.sockets.on('connection', function(socket) {
