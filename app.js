@@ -21,6 +21,10 @@ var config = require(__dirname + '/config/config')[env];
 
 var dbpath = __dirname + "/" + config.storage;
 
+if(process.env.OPENSHIFT_DATA_DIR){
+	dbpath=process.env.OPENSHIFT_DATA_DIR+'database.sqlite'
+}
+
 var sequelize = new Sequelize(config.database,'' , '', {
    dialect: 'sqlite',
    omitNull: true,
@@ -67,15 +71,5 @@ GLOBAL.models = require('./model')(sequelize)
 
 // Routes
 require('./routes')(app);
-
-// var server = http.createServer(app);
-
-// GLOBAL.sio = require('socket.io').listen(server);
-
-// require('./socket')
-
-// server.listen(app.get('port'), function(){
-//   console.log('Express server listening on port ' + app.get('port'));
-// });
 
 exports.app = app;
