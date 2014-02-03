@@ -43,9 +43,9 @@ module.exports = function(sequelize, DataTypes) {
       },
       runTypeText: function () {
         if(this.runType === "All"){
-          return "All Tests in all devices"
+          return "All Tests in each device"
         }else{
-          return "Distribute tests in all devices"
+          return "Distribute Tests across all devices"
         }
       }
     }
