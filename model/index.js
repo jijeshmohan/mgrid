@@ -3,7 +3,8 @@ module.exports = function(sequelize) {
         Device: sequelize.import(__dirname + '/device'),
         Run: sequelize.import(__dirname + '/run'),
         RunItem: sequelize.import(__dirname + '/runitem'),
-        Scenario: sequelize.import(__dirname + '/scenario')
+        Scenario: sequelize.import(__dirname + '/scenario'),
+        Test: sequelize.import(__dirname + '/tests'),
     };
 
     // Associations

@@ -1,4 +1,5 @@
 var _ = require('underscore')._;
+var Sequelize = require("sequelize");
 
 sio.configure('production', function() {
     sio.set('log level', 1);
@@ -31,7 +32,28 @@ sio.sockets.on('connection', function(socket) {
   		item.save();
   	})
   });
+  
+  socket.on('scenarios',function(data){
+	  var tests = _.chain(data.result)
+	  	 .map(function(feature){
+	  	 	return _.map(_.where(feature.elements,{"keyword": "Scenario"}),function(scenario){
+	  	 		var scenarioURI=feature.uri+":"+scenario.line;
+	  	 		return {name: scenario.name, uri: scenarioURI,feature: feature.name};
+	  	 	});
+	  	 })
+	  	 .flatten()
+	  	 .value();
 
+		models.Test.destroy().success(function(rows){
+			models.Test.bulkCreate(tests).success(function(){
+			}).error(function(){
+				console.log(errors);
+			});
+		}).error(function(){
+			console.log(errors);
+		});
+  });
+  
   socket.on('result',function(data){
   	socket.set("runitemId",null);
 	var isPassed = _.every(_.flatten(_.map(_.flatten(_.map(data.result,function(feature){

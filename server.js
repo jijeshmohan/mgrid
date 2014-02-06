@@ -38,3 +38,20 @@ if (typeof ipaddress === "undefined") {
 	  console.log('Express server listening on port ' + port);
 	});
 }
+
+setInterval(function(){
+  request_for_scenario(sio.sockets.clients().length - 1);
+}, 1000*20);
+
+function request_for_scenario(index){
+  if (index < 0){
+    return;
+  }
+ sio.sockets.clients()[index].get("deviceId",function (err, value) {
+    if(err == null && value){
+      sio.sockets.clients()[index].emit('get_scenarios'); 
+    }else{
+      request_for_scenario(index-1);
+    }
+  });
+}
