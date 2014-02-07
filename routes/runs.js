@@ -65,7 +65,11 @@ exports.create = function(req, res) {
     req.session.messages = req.form.errors;
     res.redirect('/runs/new');
   } else {
-    createNewRun(req,res);
+    if(req.body.runType==="All"){
+      createNewRun(req,res);
+    }else{
+      // TODO
+    }
   }
 };
 
