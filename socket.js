@@ -11,6 +11,7 @@ sio.sockets.on('connection', function(socket) {
 	       models.Device.find({where: {name: data.name}})
 	       	.success(function(device) {
 	       		if(device == null ){
+	       			 socket.emit("error","Unable to find device");
 	       			 socket.disconnect();
 	       			 return;
 	       		}
