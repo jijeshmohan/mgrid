@@ -65,13 +65,10 @@ exports.create = function(req, res) {
     req.session.messages = req.form.errors;
     res.redirect('/runs/new');
   } else {
-    if(req.body.runType==="All"){
       createNewRun(req,res);
-    }else{
-      // TODO
-    }
   }
 };
+
 
 function createNewRun (req,res) {
 
@@ -92,7 +89,11 @@ function createNewRun (req,res) {
     results.shift()
     run.setRunitems(results).success(function(){
       res.redirect('/runs');
-      sendRunRequests(results);
+       if(req.body.runType==="All"){
+          sendRunRequests(results);
+        }else{
+          executeAllTests(run, results);
+        }
     }).error(function  (errors) {
      req.session.messages = ["Error while creating new run", errors.toString()];
      res.redirect('/runs/new');
@@ -100,6 +101,14 @@ function createNewRun (req,res) {
   }).error(function(errors) {
     req.session.messages = ["Error while creating new run", errors.toString()];
     res.redirect('/runs/new');
+  });
+}
+
+function executeAllTests(run,results){
+  models.Test.findAll().success(function(tests){
+     models.QueueTest.bulkCreate(tests,['name','uri','feature']).success(function(){
+      // TODO
+    }).error(function(){});
   });
 }
 
