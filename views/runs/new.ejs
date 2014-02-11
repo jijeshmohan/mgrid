@@ -31,6 +31,7 @@
        <% if(devices.length == 0) { %>
        <div class="alert alert-danger">There are no devices currently available!</div>
        <%}else{%>
+         <a class="btn btn-info" id='selectAll'>Select All Devices</a>
          <% for(var i=0;i< devices.length;i++){ %>
           <label class="checkbox">
                <input type="checkbox" name='devices' value='<%= devices[i].id %>'> <%= devices[i].name %>
@@ -47,3 +48,11 @@
   </div>
 </form>
 </div>
+<script>
+  $('#selectAll').click(function(){
+     checkboxes = document.getElementsByName('devices');
+      for(var i=0, n=checkboxes.length;i<n;i++) {
+        checkboxes[i].checked = true;
+      }
+  });
+</script>
