@@ -6,6 +6,7 @@ module.exports = function(sequelize) {
         Scenario: sequelize.import(__dirname + '/scenario'),
         Test: sequelize.import(__dirname + '/tests'),
         QueueTest: sequelize.import(__dirname + '/queuetest'),
+        QueueDevice: sequelize.import(__dirname + '/queuedevice'),
     };
 
     // Associations
