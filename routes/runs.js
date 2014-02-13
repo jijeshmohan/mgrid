@@ -106,9 +106,55 @@ function createNewRun (req,res) {
 
 function executeAllTests(run,results){
   models.Test.findAll().success(function(tests){
-     models.QueueTest.bulkCreate(tests,['name','uri','feature']).success(function(){
-      // TODO
-    }).error(function(){});
+     models.QueueTest.bulkCreate(_.map(tests,function(test){return _.pick(test,'name','uri','feature')})).success(function(){
+      models.QueueDevice.bulkCreate(_.map(results,function(r){return _.pick(r,'deviceId','runId')})).success(function(){
+        scheduledRun();
+      }).error(function(){
+        console.log("ERROR: while creating device queue!");
+        models.QueueTest.destroy().success(function(){}).error(function(){});
+      });
+    }).error(function(){
+        console.log("ERROR: while creating tests queue!");
+    });
+  });
+}
+
+function scheduledRun(){
+  models.QueueTest.pendingTests().success(function(tests){
+    if(!tests){
+      models.QueueDevice.runningDevicesCount().success(function(c){
+        if(c===0){
+           models.QueueDevice.destroy().success(function(){}).error(function(){});
+        }
+
+      });
+      return;
+    }
+    models.QueueDevice.availableDevices().success(function(devices){
+      for (var i = 0; i < devices.length;i++) {
+        if(tests.length < i+1){
+          return;
+        }
+        runScenarioOnDevice(tests[i],devices[i]);
+      }
+    });
+  });
+}
+
+function runScenarioOnDevice(test,device){
+  test.updateStatus('Running').success(function(){
+    device.updateStatus('Running').success(function(){
+       sio.sockets.clients().forEach(function (socket) {
+        socket.get("deviceId", function (err, id) {
+          if(id === device.deviceId){
+            socket.set("runitemId",device.id);
+            socket.emit("execute_scenario",{runitem_id: device.id,scenario: test});
+          }
+        });
+      });
+    }).error(function(){
+      test.updateStatus('Pending');
+    });
   });
 }
 

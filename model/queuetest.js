@@ -17,10 +17,15 @@ module.exports = function(sequelize, DataTypes) {
     }
   },{
     classMethods: {
-     
+     pendingTests: function(){
+      return this.findAll({ where: {status: 'Pending'} });
+     }
     },
     instanceMethods: {
-     
+      updateStatus: function (status) {
+        this.status=status;
+        return this.save(['status']);
+      }
     }
   });
 };

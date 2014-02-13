@@ -41,7 +41,7 @@ if (typeof ipaddress === "undefined") {
 
 setInterval(function(){
   request_for_scenario(sio.sockets.clients().length - 1);
-}, 1000*20);
+}, 1000*60*60);
 
 function request_for_scenario(index){
   if (index < 0){
