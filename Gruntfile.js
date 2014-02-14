@@ -86,7 +86,7 @@ module.exports = function(grunt) {
         });
     });
     grunt.registerTask('deleteRuns', 'Delete all runs from db', function() {
-        grunt.log.writeln('Deleteing data from db');
+        grunt.log.writeln('Deleting data from db');
 
         var env = process.env.NODE_ENV || 'development';
         var config = require(__dirname + '/config/config')[env];
@@ -111,6 +111,35 @@ module.exports = function(grunt) {
                 }).error(function() {
                     done();
                 });
+            }).error(function() {
+                done();
+            });
+        }).error(function() {
+            grunt.log.writeln("opps...");
+            done();
+        });
+
+    });
+   grunt.registerTask('deleteQueues', 'Delete all queue items', function() {
+        grunt.log.writeln('Deleting queue from db');
+
+        var env = process.env.NODE_ENV || 'development';
+        var config = require(__dirname + '/config/config')[env];
+
+        var dbpath = __dirname + "/" + config.storage;
+
+        var sequelize = new Sequelize(config.database, '', '', {
+            dialect: 'sqlite',
+            omitNull: true,
+            storage: dbpath
+        });
+
+        var models = require('./model')(sequelize);
+        var done = this.async();
+        models.QueueTest.destroy().success(function() {
+            grunt.log.writeln("Deleted tests queue");
+            models.QueueDevice.destroy().success(function() {
+                grunt.log.writeln("Deleted device queue");
             }).error(function() {
                 done();
             });
