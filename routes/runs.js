@@ -126,7 +126,6 @@ function scheduledRun(){
         if(c===0){
            models.QueueDevice.destroy().success(function(){}).error(function(){});
         }
-
       });
       return;
     }
@@ -139,6 +138,7 @@ function scheduledRun(){
       }
     });
   });
+  
 }
 
 function runScenarioOnDevice(test,device){

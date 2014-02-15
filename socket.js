@@ -55,6 +55,33 @@ sio.sockets.on('connection', function(socket) {
 		});
   });
   
+  socket.on('scenario_result',function(data){
+  	console.log('scenario result....................');
+  	socket.set("runitemId",null);
+  	models.QueueDevice.find(data.id).success(function(device){
+  		var runitemId = device.runId;
+	    device.updateStatus('Waiting').success(function(){});
+	    var results = _.flatten(_.map(_.flatten(_.map(data.result,function(feature){
+	  			return _.where(feature.elements,{"keyword": "Scenario"});
+		  	})), function(scenario){
+				return _.map(scenario.steps,function(s){ return s.result.status});
+			}));
+	    var status="";
+		if(_.every(results,function(s){return s === 'passed'})){
+			status="Passed";
+		}else if(_.every(results,function(s){return s === 'skipped'})){
+			status="Skipped";
+		}else{
+			status="Failed";
+		}
+	    models.Scenario.create({name: data.scenario.name,feature: data.scenario.feature,status: status,runitemId: runitemId});
+	    models.QueueTest.find(data.scenario.id).success(function(test){
+	    	test.destroy();
+	    });
+  	});
+
+  });
+
   socket.on('result',function(data){
   	socket.set("runitemId",null);
 	var isPassed = _.every(_.flatten(_.map(_.flatten(_.map(data.result,function(feature){
