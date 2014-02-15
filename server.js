@@ -26,7 +26,7 @@ var port = process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_P
 var server = http.createServer(app);
 
 GLOBAL.sio = require('socket.io').listen(server);
-
+GLOBAL.scheduleInterval=null;
 require('./socket')
 
 if (typeof ipaddress === "undefined") {
