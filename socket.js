@@ -56,7 +56,6 @@ sio.sockets.on('connection', function(socket) {
   });
   
   socket.on('scenario_result',function(data){
-  	console.log('scenario result....................');
   	socket.set("runitemId",null);
   	models.QueueDevice.find(data.id).success(function(device){
   		var runitemId = device.runId;

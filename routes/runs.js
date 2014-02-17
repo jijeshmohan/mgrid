@@ -124,7 +124,12 @@ function scheduledRun(){
     if(!tests || tests.length === 0){
       models.QueueDevice.runningDevicesCount().success(function(c){
         if(c===0){
-           models.QueueDevice.destroy().success(function(){}).error(function(){});
+           models.QueueDevice.all().success(function(devices){
+             var runItemIds=_.pluck(devices,'runId');
+             // TODO : Update runitems with proper status
+             updateRunItem(runItemIds);
+             models.QueueDevice.destroy().success(function(){}).error(function(){});
+           });
            clearInterval(scheduleInterval);
            scheduleInterval=null;
         }
@@ -138,6 +143,23 @@ function scheduledRun(){
         }
         runScenarioOnDevice(tests[i],devices[i]);
       }
+    });
+  });
+}
+
+function updateRunItem (runItemIds) {
+  models.RunItem.findAll({where : {id: runItemIds}, include: [{model: models.Scenario}] }).success(function(runItems){
+    runItems.forEach(function(runItem){
+      var status=""
+      if(_.every(runItem.scenarios,function(s){return s.status === 'Passed'})){ 
+        status="Passed"
+      }else{
+        status="Failed"
+      }
+      runItem.status=status;
+      runItem.save().error(function(){
+        console.log("Error while updating runitem");
+      });
     });
   });
 }
