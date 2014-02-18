@@ -89,7 +89,7 @@ function createNewRun (req,res) {
     results.shift()
     run.setRunitems(results).success(function(){
       res.redirect('/runs');
-       if(req.body.runType==="All"){
+       if(req.body.runType==="All" || req.body.devices.length ===1){
           sendRunRequests(results);
         }else{
           executeAllTests(run, results);
