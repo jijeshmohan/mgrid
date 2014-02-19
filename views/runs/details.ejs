@@ -16,7 +16,7 @@
 						<tr>
 							<td><%= scenario.name %></td>
 							<td><%= item.device.name %></td>
-							<td><%= scenario.status %></td>
+							<td><%- displayIcons(scenario.status) %> <%=   scenario.status %></td>
 						</tr>
 					<%});%>
 				<%});%>
