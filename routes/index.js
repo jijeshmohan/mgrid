@@ -17,6 +17,7 @@ module.exports = function(app) {
     app.post('/runs',runs.form,runs.create);
     app.get('/runs/:id',runs.show);
     app.get('/runs/:id/compare',runs.compare);
+    app.get('/runs/:id/details',runs.details);
 
      //settings
     var settings = require('./settings');

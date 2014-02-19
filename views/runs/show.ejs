@@ -25,7 +25,13 @@
 
 <div class="row">
 <div class="col-md-12">
-	<h4>Devices <small class="pull-right"><a href="/runs/<%=run.id%>/compare"><i class="fa fa-files-o"></i> Show comparison</a></small></h4>
+	<h4>Devices <small class="pull-right">
+	<% if (run.runType === "All" ) {%>
+		<a href="/runs/<%=run.id%>/compare"><i class="fa fa-files-o"></i> Show comparison</a>
+	<%}else{ %>
+		<a href="/runs/<%=run.id%>/details"><i class="fa fa-files-o"></i> Show Details</a>
+	<% } %>
+		</small></h4>
 	<hr/>
 	<table class="table" id="accordion">
 		<thead>

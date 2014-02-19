@@ -1,0 +1,26 @@
+<h3>Details Run - <%= run.name() %></h3>
+<hr/>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Scenario</th>
+					<th>Device</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% _.each(run.runitems,function(item){ %> 
+					<% _.each(item.scenarios,function(scenario){ %> 
+						<tr>
+							<td><%= scenario.name %></td>
+							<td><%= item.device.name %></td>
+							<td><%= scenario.status %></td>
+						</tr>
+					<%});%>
+				<%});%>
+			</tbody>
+		</table>
+	</div>
+</div>
