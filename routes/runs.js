@@ -139,7 +139,6 @@ function scheduledRun(){
         if(c===0){
            models.QueueDevice.all().success(function(devices){
              var runItemIds=_.pluck(devices,'runId');
-             // TODO : Update runitems with proper status
              updateRunItem(runItemIds);
              models.QueueDevice.destroy().success(function(){}).error(function(){});
            });
@@ -183,7 +182,8 @@ function runScenarioOnDevice(test,device){
        sio.sockets.clients().forEach(function (socket) {
         socket.get("deviceId", function (err, id) {
           if(id === device.deviceId){
-            socket.set("runitemId",device.id);
+            socket.set("runitemId",device.runId);
+            socket.set("testId",test.id);
             socket.emit("execute_scenario",{runitem_id: device.id,scenario: test});
           }
         });

@@ -56,7 +56,7 @@ sio.sockets.on('connection', function(socket) {
   });
   
   socket.on('scenario_result',function(data){
-  	socket.set("runitemId",null);
+
   	models.QueueDevice.find(data.id).success(function(device){
   		var runitemId = device.runId;
 	    device.updateStatus('Waiting').success(function(){});
@@ -78,7 +78,8 @@ sio.sockets.on('connection', function(socket) {
 	    	test.destroy();
 	    });
   	});
-
+  	socket.set("runitemId",null);
+    socket.set("testId",null);
   });
 
   socket.on('result',function(data){
@@ -136,7 +137,7 @@ sio.sockets.on('connection', function(socket) {
        		if (deviceName !== ""){
        			socket.get("runitemId",function (err, value) {
        				if(err){
-       					console.log("-------------------------------------");
+       					console.log(err);
        				}
        				console.log("Runitem ID " + value)
      				if(value !== null){
@@ -145,6 +146,13 @@ sio.sockets.on('connection', function(socket) {
      						item.status="Error";
      						item.save().error(function(){
 					  			console.log("Error while updating runitem");
+					  		});
+					  		models.QueueDevice.destroy({runId: item.id});
+					  		socket.get("testId",function(err,testId){
+     							socket.set("testId",null);
+     							models.QueueTest.find(id: testId).success(function(test){
+     								test.updateStatus("Pending");
+     							});
 					  		});
      					}).error(function(){});
      				}
