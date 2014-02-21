@@ -150,7 +150,7 @@ sio.sockets.on('connection', function(socket) {
 					  		models.QueueDevice.destroy({runId: item.id});
 					  		socket.get("testId",function(err,testId){
      							socket.set("testId",null);
-     							models.QueueTest.find(id: testId).success(function(test){
+     							models.QueueTest.find(testId).success(function(test){
      								test.updateStatus("Pending");
      							});
 					  		});
