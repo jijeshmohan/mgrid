@@ -27,3 +27,5 @@ Mobile Testing grid (mgrid) helps to execute mobile automation tests in actual d
  
  
  To run tests you need to run [mgrid-client](https://github.com/jijeshmohan/mgrid-client).
+
+ [Demo](http://mgrid-mgrid.rhcloud.com/)
