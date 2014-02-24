@@ -9,6 +9,7 @@ Mgrid also supports execution of tests in via http which helps to run the test i
 
 * Execution of mobile tests in simulator and actual devices
 * Paralell tests in multiple devices
+* Distributed testing reduces the execution time
 * Auto discovery of devices connected.
 * Supports android and iOS tests
 * Detailed Dashboard
