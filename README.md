@@ -1,6 +1,6 @@
 ##Mgrid
 
-Mobile Testing grid (mgrid) helps to execute mobile automation tests in actual devices simultaneously. This tool currently helps to execute tests written in tools like frank, calabash, appium ( cucumber based tests) and consolidate the results
+Mobile Testing grid [(mgrid)](https://jijeshmohan.github.io/mgrid) helps to execute mobile automation tests in actual devices simultaneously. This tool currently helps to execute tests written in tools like frank, calabash, appium ( cucumber based tests) and consolidate the results
 in a central place.
 
 Mgrid also supports execution of tests in via http which helps to run the test in different mobile networks ( in different countries ) by controlling and monitor the tests from one location.
