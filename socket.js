@@ -31,7 +31,15 @@ sio.sockets.on('connection', function(socket) {
   	models.RunItem.find(data.runitem.id).success(function(item){
   		item.status=data.status;
   		item.save();
-  	})
+  		if (data.status==="Running"){
+	  		models.Device.find(item.deviceId).success(function(device){
+	  			device.status="running"
+	  			device.save(['status']);
+	  			socket.broadcast.emit('device_status', {id: device.id, status: 'Running'})
+	  		});
+	  	}
+  	});
+  	
   });
   
   socket.on('scenarios',function(data){
@@ -126,6 +134,11 @@ sio.sockets.on('connection', function(socket) {
   		item.save().error(function(){
   			console.log("Error while updating runitem");
   		});
+  		models.Device.find(item.deviceId).success(function(device){
+  			device.status="available"
+  			device.save(['status']);
+  			socket.broadcast.emit('device_status', {id: device.id, status: 'Available'})
+  		});
   	});
   });
 
@@ -168,5 +181,8 @@ sio.sockets.on('connection', function(socket) {
   });
 });
 
+function updateDeviceStatus(deviceId){
+
+}
 
 
