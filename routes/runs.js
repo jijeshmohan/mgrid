@@ -127,6 +127,7 @@ function executeAllTests(run,results){
   models.Test.findAll().success(function(tests){
      models.QueueTest.bulkCreate(_.map(tests,function(test){return _.pick(test,'name','uri','feature')})).success(function(){
       models.QueueDevice.bulkCreate(_.map(results,function(r){return {deviceId: r.deviceId, runId: r.id}; })).success(function(){
+        scheduledRun();
         scheduleInterval = setInterval(scheduledRun,1000*15);
       }).error(function(){
         console.log("ERROR: while creating device queue!");
