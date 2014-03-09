@@ -127,6 +127,12 @@ function executeAllTests(run,results){
   models.Test.findAll().success(function(tests){
      models.QueueTest.bulkCreate(_.map(tests,function(test){return _.pick(test,'name','uri','feature')})).success(function(){
       models.QueueDevice.bulkCreate(_.map(results,function(r){return {deviceId: r.deviceId, runId: r.id}; })).success(function(){
+        _.each(results,function(r){
+           models.Device.find(r.deviceId).success(function(device){
+            device.status="running"
+            device.save(['status']);
+          });
+        });
         scheduledRun();
         scheduleInterval = setInterval(scheduledRun,1000*15);
       }).error(function(){
@@ -176,6 +182,10 @@ function updateRunItem (runItemIds) {
         status="Failed"
       }
       runItem.status=status;
+       models.Device.find(runItem.deviceId).success(function(device){
+        device.status="available"
+        device.save(['status']);
+      });
       runItem.save().error(function(){
         console.log("Error while updating runitem");
       });
