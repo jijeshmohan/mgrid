@@ -27,6 +27,9 @@ module.exports = function(sequelize, DataTypes) {
       },
       availableCount: function(){
         return this.count({where: ["status = 'available'"] });
+      },
+      runningCount: function () {
+        return this.count({where: ["status = 'running'"] });
       }
     },
     instanceMethods: {

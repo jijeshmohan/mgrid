@@ -58,15 +58,18 @@ exports.show = function (req,res) {
 
 exports.newRun = function(req, res) {
   models.Device.availableDevices().success(function(devices) { 
-    if (devices === null){
-      devices=[];
-    }
-    res.render('runs/new', {
-     msg: req.session.messages,
-     menu: 'runs',
-     devices: devices
-   });
-    req.session.messages = [];
+    models.Device.runningCount().success(function(count){
+      if (devices === null){
+        devices=[];
+      }
+      res.render('runs/new', {
+       msg: req.session.messages,
+       menu: 'runs',
+       devices: devices,
+       runningCount: count
+     });
+      req.session.messages = [];
+     });
   }).error(function(error) {
     res.send(error);
   });

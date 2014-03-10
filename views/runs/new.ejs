@@ -4,6 +4,10 @@
 <% msg.forEach(function(m){ %>
 <div class="alert alert-danger"><%= m %></div>
 <% }); } %>
+
+<% if(runningCount>0) { %>
+  <div class="alert alert-danger">Tests are currently running.</div>
+<%}else{%>
 <div class="col-md-6 col-md-offset-2">
 <form class="form-horizontal" role="form" method="post" action="/runs">
   <div class="form-group">
@@ -56,3 +60,4 @@
       }
   });
 </script>
+<% } %>
