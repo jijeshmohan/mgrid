@@ -7,6 +7,9 @@
 
 <% if(runningCount>0) { %>
   <div class="alert alert-danger">Tests are currently running.</div>
+  <div>
+    <a href="/runs" class="btn btn-info">Back</a>
+  </div>
 <%}else{%>
 <div class="col-md-6 col-md-offset-2">
 <form class="form-horizontal" role="form" method="post" action="/runs">
