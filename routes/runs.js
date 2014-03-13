@@ -134,6 +134,7 @@ function executeAllTests(run,results){
            models.Device.find(r.deviceId).success(function(device){
             device.status="running"
             device.save(['status']);
+            sio.sockets.emit('device_status', {id: device.id, status: 'Running'})
           });
         });
         scheduledRun();
@@ -188,6 +189,7 @@ function updateRunItem (runItemIds) {
        models.Device.find(runItem.deviceId).success(function(device){
         device.status="available"
         device.save(['status']);
+        sio.sockets.emit('device_status', {id: device.id, status: 'Available'})
       });
       runItem.save().error(function(){
         console.log("Error while updating runitem");
