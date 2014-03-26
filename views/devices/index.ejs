@@ -20,10 +20,8 @@
 	  <td><%=: device.deviceType | capitalize %></td>
 	  <td><%=: device.platform %></td>
 	  <td><%= device.osVersion %></td>
-	  <td id="device_<%= device.id %>" <% if (device.isAvailable()) { %> class="green" <% } %>>
-		<% if (device.isAvailable()) { %> <i class="fa fa-circle"></i> <% } else{ %> <i class="fa fa-circle-o"></i> <% }%> 
-	  	<%=: device.status | capitalize %></td>
-	</tr>
+	  <%- displayDeviceStatus(device) %> <%=: device.status | capitalize %></td>
+	  </tr>
 	<% }); %>
 </tbody>
 </table>
@@ -35,11 +33,17 @@ socket.on('connect', function(){
   socket.on('device_status', function(data){
   	var icon="";
   	var td = $('#device_'+data.id);
-  	if(data.status ==="Available"){
+  	if(data.status ==="Available" ){
 		$(td).addClass('green');
+		$(td).removeClass('yellow');
+		icon='<i class="fa fa-circle"></i>';
+	}else if(data.status === "Running"){
+		$(td).removeClass('green');
+		$(td).addClass('yellow');
 		icon='<i class="fa fa-circle"></i>';
 	}else{
 		$(td).removeClass('green');
+		$(td).removeClass('yellow');
 		icon='<i class="fa fa-circle-o"></i>';
 	}
     td.html(icon +" "+ data.status);

@@ -47,5 +47,20 @@ module.exports = {generateStatusClass: function(status){
 			result+=" "+item.device.name+" ["+ item.status+"]"
 		});
 		return result;
+	},
+	displayDeviceStatus: function(device){
+		 var content= "<td id=\"device_"+device.id +"\"" ;
+		 if (device.isAvailable()) {
+		 	content += "class='green'" 
+		 }else if(device.status === "running"){
+		 	content += "class='yellow'" 
+		 }
+		 content += ">"
+		if (device.isAvailable() || device.status === "running" ) { 
+			content += "<i class='fa fa-circle'></i>"
+		} else{ 
+			content += "<i class='fa fa-circle-o'></i>"
+		} 
+		return content;
 	}
 };
