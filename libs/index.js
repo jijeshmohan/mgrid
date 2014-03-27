@@ -19,6 +19,19 @@ module.exports = {generateStatusClass: function(status){
 			break;
 		}
 	},
+	displayPanel: function(status){
+		switch(status){
+			case "Running":
+				return "panel-warning";
+			break;
+			case "Failed":
+				return "panel-danger";
+			break;
+			case "Passed":
+				return "panel-success";
+			break;
+		}
+	},
 	displayIcons: function(status){
 		var stat="";
 		switch(status.toLowerCase()){

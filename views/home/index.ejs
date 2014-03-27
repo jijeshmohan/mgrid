@@ -5,7 +5,7 @@
 <% if(lastrun){runStatus = lastrun.dynamicStatus(); } %>
 <div class="row gap">
 	<div class="col-lg-4">
-        <div class="panel <% if(runStatus==="Running"){ %> panel-warning <% }else{%> panel-success <%}%>">
+        <div class="panel <%= displayPanel(runStatus)%>">
           <div class="panel-heading">
             <div class="row">
               <div class="col-xs-6">
