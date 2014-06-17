@@ -68,6 +68,10 @@ module.exports = function(grunt) {
 
         var dbpath = __dirname + "/" + config.storage;
 
+        if(process.env.OPENSHIFT_DATA_DIR){
+             dbpath=process.env.OPENSHIFT_DATA_DIR+'database.sqlite'
+        }
+        
         var sequelize = new Sequelize(config.database, '', '', {
             dialect: 'sqlite',
             omitNull: true,

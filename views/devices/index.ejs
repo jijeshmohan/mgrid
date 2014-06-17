@@ -28,7 +28,8 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var socket = io.connect('http://localhost:3000');
+<% var port  = (process.env.OPENSHIFT_NODEJS_PORT)? '8000': '3000' %>
+var socket = io.connect('http://'+ window.location.host + ':' + <%= port %>);
 socket.on('connect', function(){
   socket.on('device_status', function(data){
   	var icon="";
