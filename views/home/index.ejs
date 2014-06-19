@@ -182,8 +182,8 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-<% var port  = (process.env.OPENSHIFT_NODEJS_PORT)? '8000': '3000' %>
-var socket = io.connect('http://'+ window.location.host + ':' + <%= port %>);
+<% var port  = (process.env.OPENSHIFT_NODEJS_PORT)? ':8000': '' %>
+var socket = io.connect('http://'+ window.location.host <%if (port !==''){ %> + <%= port %> <%}%>);
 socket.on('connect', function(){
   socket.on('device_status', function(data){
   	var count = parseInt($("#deviceCount").text())
